@@ -21,7 +21,7 @@ import {
 import LeadForm from "@/components/LeadForm"
 import SectionHeader from "@/components/SectionHeader"
 
-const LOGO_URL = "https://res.cloudinary.com/demo/image/upload/v1/sample.jpg"
+const LOGO_URL = "https://res.cloudinary.com/dw9v7jjrq/image/upload/v1779361354/cropped-Continental-Furnaces-Logo_q8ict4.jpg"
 const HERO_BG_URL = "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop"
 const DEFAULT_PLACEHOLDER = "https://picsum.photos/seed/furnace/1200/900"
 
@@ -45,7 +45,7 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden bg-white">
       {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50 bg-[#07111F]/95 backdrop-blur-md border-b border-white/10 overflow-x-hidden">
+      <nav className="fixed top-0 w-full z-50 bg-slate-700 backdrop-blur-md border-b border-white/10 overflow-x-hidden">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between max-w-7xl">
           <Link href="/" className="flex items-center gap-4">
             <Image
@@ -56,7 +56,7 @@ export default function LandingPage() {
               className="h-12 w-auto object-contain"
               priority
             />
-            <Badge className="bg-[#F97316] text-white border-none px-3 py-1">
+            <Badge className="bg-primary text-white border-none px-3 py-1">
               Since 1987
             </Badge>
           </Link>
@@ -73,7 +73,7 @@ export default function LandingPage() {
             </Button>
 
             <Button
-              className="bg-[#F97316] hover:bg-[#EA580C] text-white font-bold px-6"
+              className="bg-primary hover:bg-primary/90 text-white font-bold px-6"
               onClick={() => {
                 scrollToLeadForm()
               }}
@@ -86,7 +86,7 @@ export default function LandingPage() {
 
       <main className="pt-20 pb-24 lg:pb-0 w-full">
         {/* HERO SECTION */}
-        <section className="relative overflow-hidden bg-[#07111F] py-20 lg:py-24 w-full">
+        <section className="relative overflow-hidden bg-background py-20 lg:py-24 w-full">
           <div className="absolute inset-0 opacity-40">
             <Image
               src={HERO_BG_URL}
@@ -100,28 +100,30 @@ export default function LandingPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#07111F]/95 via-[#07111F]/90 to-[#07111F]/75" />
 
           <div className="container mx-auto px-4 relative z-10 max-w-7xl">
-            <div className="grid grid-cols-1 lg:grid-cols-[60%_40%] gap-10 lg:gap-16 items-center w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-[60%_40%] gap-10 lg:gap-16 items-start w-full">
               <div className="text-white space-y-7 w-full">
-                <h1 className="text-4xl md:text-6xl font-bold leading-tight text-white max-w-4xl">
+                <h1 className="text-4xl md:text-4xl font-bold leading-tight text-white max-w-4xl">
                   India&apos;s Most Trusted Aluminium Furnace Manufacturer — Custom-Built for Your Production Line
                 </h1>
 
-                <h2 className="text-[#F97316] text-xl md:text-2xl font-semibold leading-relaxed max-w-3xl">
-                  Bogie Hearth Ovens | Ageing & Precipitation Hardening Furnaces | 250°C – 600°C | PLC/HMI Controlled
+                <h2 className="text-primary text-xl md:text-1xl font-semibold leading-relaxed max-w-3xl">
+                         Bogie Hearth Ovens | 250°C – 600°C | 
+                  <br /> Ageing & Precipitation Hardening Furnaces | 
+                  <br /> PLC/HMI Controlled
                 </h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 max-w-5xl">
                   {[
                     {
-                      icon: <Factory className="h-5 w-5 text-[#F97316]" />,
+                      icon: <Factory className="h-5 w-5 text-primary" />,
                       text: "35+ Years of Engineering Excellence",
                     },
                     {
-                      icon: <ShieldCheck className="h-5 w-5 text-[#F97316]" />,
+                      icon: <ShieldCheck className="h-5 w-5 text-primary" />,
                       text: "ISO 9001:2015 & 14001:2015 Certified",
                     },
                     {
-                      icon: <Settings className="h-5 w-5 text-[#F97316]" />,
+                      icon: <Settings className="h-5 w-5 text-primary" />,
                       text: "Custom-Built for Every Production Scale",
                     },
                   ].map((item, i) => (
@@ -141,7 +143,7 @@ export default function LandingPage() {
               </div>
 
               {/* <div className="hidden lg:block sticky top-28" id="top-form-desktop">
-                <div className="rounded-2xl border border-white/10 bg-[#0B1728] p-6 shadow-2xl">
+                <div className="rounded-2xl border border-white/10 bg-card p-6 shadow-2xl">
                   <div className="mb-6 space-y-2">
                     <h3 className="text-2xl font-bold text-white">
                       Get a Free Technical Consultation
@@ -159,7 +161,7 @@ export default function LandingPage() {
 
                   {/* <div className="mt-5 border-t border-white/10 pt-5 text-sm text-white/80">
                     <div className="flex items-center gap-2">
-                      <Phone className="h-4 w-4 text-[#F97316]" />
+                      <Phone className="h-4 w-4 text-primary" />
                       <span>
                         Call Directly: +91 98113 04306 | Response within 4 working hours
                       </span>
@@ -172,8 +174,8 @@ export default function LandingPage() {
         </section>
 
         {/* MOBILE FORM */}
-        <section className="lg:hidden p-4 bg-[#07111F]" id="top-form-mobile">
-          <div className="rounded-2xl border border-white/10 bg-[#0B1728] p-6 shadow-2xl">
+        {/* <section className="lg:hidden p-4 bg-background" id="top-form-mobile">
+          <div className="rounded-2xl border border-white/10 bg-card p-6 shadow-2xl">
             <div className="mb-6 space-y-2">
               <h3 className="text-2xl font-bold text-white">
                 Get a Free Technical Consultation
@@ -187,14 +189,14 @@ export default function LandingPage() {
 
             <div className="mt-5 border-t border-white/10 pt-5 text-sm text-white/80">
               <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-[#F97316]" />
+                <Phone className="h-4 w-4 text-primary" />
                 <span>
                   Call Directly: +91 98113 04306 | Response within 4 working hours
                 </span>
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
           {/* PROBLEM SECTION */}
           <section className="relative py-20 w-full overflow-hidden">
@@ -209,12 +211,12 @@ export default function LandingPage() {
             </div>
 
             {/* Overlay */}
-            <div className="absolute inset-0 bg-primary/90" />
+            <div className="absolute inset-0 bg-slate" />
 
             {/* Content */}
             <div className="relative z-10 container mx-auto px-4 max-w-7xl">
               <SectionHeader
-                title="Is Your Current Aluminium Processing Furnace Costing You More Than It Should?"
+                title={"Is Your Current Aluminium Processing Furnace Costing You More Than It Should?"}
                 subtitle=""
                 light
               />
@@ -224,31 +226,31 @@ export default function LandingPage() {
                   {
                     title: "Uneven Heat Distribution",
                     desc: "Inconsistent temperature across load causes metallurgical defects, rework, and material rejection",
-                    icon: <Flame className="h-8 w-8 text-[#F97316]" />,
+                    icon: <Flame className="h-8 w-8 text-primary" />,
                   },
                   {
                     title: "High Energy Consumption",
                     desc: "Poor insulation and outdated heating systems inflate operating costs every month",
-                    icon: <BarChart3 className="h-8 w-8 text-[#F97316]" />,
+                    icon: <BarChart3 className="h-8 w-8 text-primary" />,
                   },
                   {
                     title: "No Process Control or Data Logging",
                     desc: "Manual operations with no PLC = no repeatability, no compliance, no quality records",
-                    icon: <Cpu className="h-8 w-8 text-[#F97316]" />,
+                    icon: <Cpu className="h-8 w-8 text-primary" />,
                   },
                 ].map((item, i) => (
                   <Card
                     key={i}
-                    className="bg-slate-700 border border-white/10 text-white rounded-2xl"
+                    className="bg-slate-700 border border-white/10 text-black rounded-2xl"
                   >
-                    <CardContent className="p-8 space-y-5">
+                    <CardContent className="p-8 space-y-5 ">
                       {item.icon}
 
-                      <h3 className="text-2xl font-bold leading-snug text-white">
+                      <h3 className="text-2xl font-bold leading-snug text-white-bold">
                         {item.title}
                       </h3>
 
-                      <p className="text-white/70 leading-relaxed">
+                      <p className="text-white leading-relaxed italic">
                         {item.desc}
                       </p>
                     </CardContent>
@@ -261,7 +263,7 @@ export default function LandingPage() {
         {/* PRODUCTS SECTION */}
         <section className="py-20 bg-white w-full">
           <div className="container mx-auto px-4 max-w-7xl">
-            <SectionHeader
+            <SectionHeader light
               title="Continental Aluminium Furnaces — Engineered for Zero Compromise"
               subtitle=""
             />
@@ -278,14 +280,14 @@ export default function LandingPage() {
                   />
                 </div>
 
-                <CardContent className="p-8 space-y-6">
+                <CardContent className="p-8 space-y-6 bg-slate-900">
                   <div>
-                    <h3 className="text-3xl font-bold text-secondary leading-tight">
+                    <h3 className="text-3xl font-bold text-primary leading-tight">
                       Bogie Hearth Oven — Uniform Heating. Zero Contamination.
                     </h3>
                   </div>
                   <div className="mt-8 overflow-hidden rounded-2xl">
-                  <p className="text-slate-600 leading-relaxed text-base text-white/90 mb-7">
+                  <p className="text-slate-600 leading-relaxed text-base text-white/90 mb-7 italic">
                     Optimised for aluminium annealing, ageing, and stress relieving. Electric heating ensures clean, uniform heat distribution with no gas contamination — critical for high-purity aluminium processing.
                   </p>
                   </div>
@@ -301,7 +303,7 @@ export default function LandingPage() {
                           ["Capacity", "Hundreds of kg to several tonnes"],
                         ].map((row, i) => (
                           <tr key={i} className="border-b border-slate-200 last:border-none">
-                            <td className="p-4 font-semibold text-secondary bg-slate-700 w-1/2">
+                            <td className="p-4 font-semibold text-white bg-slate-700 w-1/2">
                               {row[0]}
                             </td>
                             <td className="p-4 text-slate-700 text-white">{row[1]}</td>
@@ -312,14 +314,14 @@ export default function LandingPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <p className="font-semibold text-secondary">Industries it serves:</p>
-                    <p className="text-slate-600 text-white">
+                    <p className="font-semibold text-primary">Industries it serves:</p>
+                    <p className="text-slate-600 text-white italic">
                       Non-ferrous wire, cable manufacturing, automotive electrical components, aluminium recycling
                     </p>
                   </div>
 
                   <Button
-                    className="w-full bg-[#F97316] hover:bg-[#EA580C] text-white font-bold h-12"
+                    className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-12"
                     onClick={() => {
                       scrollToLeadForm()
                     }}
@@ -342,12 +344,12 @@ export default function LandingPage() {
 
                 <CardContent className="p-8 space-y-6">
                   <div>
-                    <h3 className="text-3xl font-bold text-secondary leading-tight">
+                    <h3 className="text-3xl font-bold text-primary leading-tight">
                       Precipitation Hardening Furnace — Precision Ageing for Maximum Alloy Strength
                     </h3>
                   </div>
 
-                  <p className="text-slate-600 leading-relaxed text-base text-white/90">
+                  <p className="text-slate-600 leading-relaxed text-base text-white/90 italic">
                     Thermal treatment that enhances strength, hardness, and fatigue performance of aluminium alloys through controlled precipitation. Critical for automotive, aerospace, and electrical grade aluminium components.
                   </p>
 
@@ -362,7 +364,7 @@ export default function LandingPage() {
                           ["Cooling", "Forced Air or Water Quenching"],
                         ].map((row, i) => (
                           <tr key={i} className="border-b border-slate-200 last:border-none">
-                            <td className="p-4 font-semibold text-secondary bg-slate-700 w-1/2">
+                            <td className="p-4 font-semibold text-white bg-slate-700 w-1/2">
                               {row[0]}
                             </td>
                             <td className="p-4 text-slate-700 text-white">{row[1]}</td>
@@ -373,14 +375,14 @@ export default function LandingPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <p className="font-semibold text-secondary">Industries it serves:</p>
-                    <p className="text-slate-600 text-white">
+                    <p className="font-semibold text-primary">Industries it serves:</p>
+                    <p className="text-slate-600 text-white italic">
                       Automotive die casting, electrical conductor manufacturing, heat treatment units
                     </p>
                   </div>
 
                   <Button
-                    className="w-full bg-[#F97316] hover:bg-[#EA580C] text-white font-bold h-12"
+                    className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-12"
                     onClick={() => {
                       scrollToLeadForm()
                     }}
@@ -394,7 +396,7 @@ export default function LandingPage() {
         </section>
 
         {/* WHY CONTINENTAL */}
-        <section className="py-20 bg-primary w-full">
+        <section className="py-20 bg-slate-100 w-full">
           <div className="container mx-auto px-4 max-w-7xl">
             <SectionHeader
               title="Why 100+ Industries Across India Trust Continental Furnaces"
@@ -405,32 +407,32 @@ export default function LandingPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-14">
               {[
                 {
-                  icon: <Cpu className="h-8 w-8 text-[#F97316]" />,
+                  icon: <Cpu className="h-8 w-8 text-primary" />,
                   title: "State-of-the-Art PLC/HMI",
                   desc: "Advanced automation, real-time monitoring, full data logging for quality compliance",
                 },
                 {
-                  icon: <Flame className="h-8 w-8 text-[#F97316]" />,
+                  icon: <Flame className="h-8 w-8 text-primary" />,
                   title: "Superior Thermal Uniformity",
                   desc: "±5°C temperature consistency across entire chamber — zero hotspots",
                 },
                 {
-                  icon: <BarChart3 className="h-8 w-8 text-[#F97316]" />,
+                  icon: <BarChart3 className="h-8 w-8 text-primary" />,
                   title: "Energy-Efficient Design",
                   desc: "Advanced ceramic fibre insulation reduces fuel consumption by up to 25% vs conventional furnaces",
                 },
                 {
-                  icon: <Wrench className="h-8 w-8 text-[#F97316]" />,
+                  icon: <Wrench className="h-8 w-8 text-primary" />,
                   title: "Custom-Built Every Time",
                   desc: "Every furnace engineered to your exact material, production volume, and floor layout",
                 },
                 {
-                  icon: <ShieldCheck className="h-8 w-8 text-[#F97316]" />,
+                  icon: <ShieldCheck className="h-8 w-8 text-primary" />,
                   title: "ISO 9001 & 14001 Certified",
                   desc: "International quality and environmental management standards — export-ready",
                 },
                 {
-                  icon: <Building2 className="h-8 w-8 text-[#F97316]" />,
+                  icon: <Building2 className="h-8 w-8 text-primary" />,
                   title: "End-to-End Support",
                   desc: "Design → Manufacturing → Installation → Commissioning → AMC — all under one roof",
                 },
@@ -442,7 +444,7 @@ export default function LandingPage() {
                   <CardContent className="p-8 space-y-5">
                     {item.icon}
                     <h3 className="text-2xl font-bold text-white">{item.title}</h3>
-                    <p className="text-white/90 leading-relaxed">{item.desc}</p>
+                    <p className="text-white/90 leading-relaxed italic">{item.desc}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -453,7 +455,7 @@ export default function LandingPage() {
         {/* INDUSTRIES SECTION */}
         <section className="py-20 bg-white w-full">
           <div className="container mx-auto px-4 max-w-7xl">
-            <SectionHeader
+            <SectionHeader light
               title="Built for Your Industry"
               subtitle=""
             />
@@ -469,13 +471,13 @@ export default function LandingPage() {
               ].map((item, i) => (
                 <Card
                   key={i}
-                  className="border-l-4 border-l-[#F97316] rounded-2xl shadow-md"
+                  className="border-l-4 border-l-secondary rounded-2xl shadow-md bg-slate-700"
                 >
-                  <CardContent className="p-6 space-y-3">
-                    <h3 className="text-xl font-bold text-secondary">
+                  <CardContent className="p-6 space-y-3 bg-slate-700 rounded-xl">
+                    <h3 className="text-xl font-bold text-primary">
                       {item}
                     </h3>
-                    <p className="text-white leading-relaxed text-sm">
+                    <p className="text-white leading-relaxed text-sm italic">
                       Custom furnace systems engineered for industrial-scale aluminium processing requirements.
                     </p>
                   </CardContent>
@@ -498,7 +500,7 @@ export default function LandingPage() {
           </div>
 
           {/* Dark Overlay */}
-          <div className="absolute inset-0 bg-primary/85" />
+          <div className="absolute inset-0 bg-slate-100" />
 
           {/* Content */}
           <div className="relative z-10 container mx-auto px-4 max-w-7xl">
@@ -539,7 +541,7 @@ export default function LandingPage() {
         </section>
 
         {/* FINAL CTA */}
-        <section className="py-24 bg-[#F97316] relative overflow-hidden w-full">
+        <section className="py-24 bg-primary relative overflow-hidden w-full">
           <div className="container mx-auto px-4 max-w-5xl text-center relative z-10 space-y-6">
             <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
               Ready to Upgrade Your Aluminium Processing Line?
@@ -568,7 +570,7 @@ export default function LandingPage() {
       </main>
 
       {/* FOOTER */}
-      <footer className="bg-[#07111F] text-white pt-8 pb-28 lg:py-8 w-full border-t border-white/10">
+      <footer className="bg-background text-white pt-8 pb-28 lg:py-8 w-full border-t border-white/10">
         <div className="container mx-auto px-4 max-w-7xl text-center text-sm text-white/60">
           <p>
             © {new Date().getFullYear()} Continental Furnaces. All Rights Reserved.
@@ -580,7 +582,7 @@ export default function LandingPage() {
       <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden p-4 bg-white border-t shadow-[0_-4px_10px_rgba(0,0,0,0.1)] flex gap-2 w-screen">
         <div className="w-full flex gap-2 max-w-7xl mx-auto px-4">
           <Button
-            className="flex-1 bg-[#F97316] hover:bg-[#EA580C] text-white font-bold h-12"
+            className="flex-1 bg-primary hover:bg-primary/90 text-white font-bold h-12"
             onClick={() => {
               scrollToLeadForm()
             }}

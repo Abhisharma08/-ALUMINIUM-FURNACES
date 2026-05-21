@@ -42,14 +42,10 @@ const defaultValues: FormValues = {
   lead_source: "Aluminium Furnace LP",
 }
 
-function validateForm(values: FormValues, compact: boolean) {
+function validateStepOne(values: FormValues) {
   const errors: FormErrors = {}
 
-  if (!compact && values.company_name.trim().length < 2) {
-    errors.company_name = "Please enter your company name."
-  }
-
-  if (!compact && values.name.trim().length < 2) {
+  if (values.name.trim().length < 2) {
     errors.name = "Name must be at least 2 characters."
   }
 
@@ -59,10 +55,7 @@ function validateForm(values: FormValues, compact: boolean) {
     errors.phone = "Enter a valid phone number."
   }
 
-  if (
-    !compact &&
-    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)
-  ) {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
     errors.email = "Please enter a valid email address."
   }
 
@@ -71,12 +64,36 @@ function validateForm(values: FormValues, compact: boolean) {
       "Please select a furnace requirement."
   }
 
-  if (
-    !compact &&
-    !values.production_capacity
-  ) {
+  return errors
+}
+
+function validateFinalStep(values: FormValues) {
+  const errors: FormErrors = {}
+
+  if (values.company_name.trim().length < 2) {
+    errors.company_name = "Please enter your company name."
+  }
+
+  if (!values.production_capacity) {
     errors.production_capacity =
       "Please select production capacity."
+  }
+
+  return errors
+}
+
+function validateCompact(values: FormValues) {
+  const errors: FormErrors = {}
+
+  const phoneDigits = values.phone.replace(/\D/g, "")
+
+  if (phoneDigits.length < 10 || phoneDigits.length > 12) {
+    errors.phone = "Enter a valid phone number."
+  }
+
+  if (!values.furnace_requirement) {
+    errors.furnace_requirement =
+      "Please select a furnace requirement."
   }
 
   return errors
@@ -103,7 +120,11 @@ export default function LeadForm({
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  const [step, setStep] = useState(1)
+
   const router = useRouter()
+
+  const isTwoStepHero = !compact
 
   function handleChange(
     event: React.ChangeEvent<
@@ -117,17 +138,44 @@ export default function LeadForm({
       [name]: value,
     }))
 
-    setErrors((current) => {
-      if (!current[name as keyof FormErrors] && !current.submit) {
-        return current
-      }
+    setErrors((current) => ({
+      ...current,
+      [name]: undefined,
+      submit: undefined,
+    }))
+  }
 
-      return {
-        ...current,
-        [name]: undefined,
-        submit: undefined,
-      }
-    })
+  async function handleStepOne() {
+    const validationErrors = validateStepOne(values)
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
+      return
+    }
+
+    setErrors({})
+
+    setIsSubmitting(true)
+
+    try {
+      await submitToHubSpot({
+        ...values,
+        company_name: "",
+        designation: "",
+        production_capacity: "",
+      })
+
+      setStep(2)
+    } catch (error) {
+      console.error(error)
+
+      setErrors({
+        submit:
+          "Something went wrong. Please try again.",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   async function handleSubmit(
@@ -135,7 +183,9 @@ export default function LeadForm({
   ) {
     event.preventDefault()
 
-    const validationErrors = validateForm(values, compact)
+    const validationErrors = compact
+      ? validateCompact(values)
+      : validateFinalStep(values)
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)
@@ -189,140 +239,40 @@ export default function LeadForm({
           value={values.lead_source}
         />
 
-        {/* Company Name */}
-        {!compact && (
-          <div className="space-y-1.5">
-            <label
-              htmlFor="company_name"
-              className="text-sm font-semibold text-primary"
-            >
-              Company Name *
-            </label>
+        {/* HERO FORM STEP 1 */}
+        {isTwoStepHero && step === 1 && (
+          <>
+            {/* Name */}
+            <div className="space-y-1.5">
+              <label
+                htmlFor="name"
+                className="text-sm font-semibold text-black"
+              >
+                Your Name *
+              </label>
 
-            <input
-              id="company_name"
-              name="company_name"
-              value={values.company_name}
-              onChange={handleChange}
-              placeholder="Your Company Name"
-              className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
-            />
+              <input
+                id="name"
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+                placeholder="Your Full Name"
+                autoComplete="name"
+                className="flex h-12 w-full rounded-xl border border-input bg-white px-4 py-2 text-sm text-black placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+              />
 
-            {errors.company_name ? (
-              <p className="text-sm text-destructive">
-                {errors.company_name}
-              </p>
-            ) : null}
-          </div>
-        )}
+              {errors.name ? (
+                <p className="text-sm text-destructive">
+                  {errors.name}
+                </p>
+              ) : null}
+            </div>
 
-        {/* Name */}
-        {!compact && (
-          <div className="space-y-1.5">
-            <label
-              htmlFor="name"
-              className="text-sm font-semibold text-primary"
-            >
-              Your Name *
-            </label>
-
-            <input
-              id="name"
-              name="name"
-              value={values.name}
-              onChange={handleChange}
-              placeholder="Your Full Name"
-              autoComplete="name"
-              className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
-            />
-
-            {errors.name ? (
-              <p className="text-sm text-destructive">
-                {errors.name}
-              </p>
-            ) : null}
-          </div>
-        )}
-
-        {/* Designation */}
-        {!compact && (
-          <div className="space-y-1.5">
-            <label
-              htmlFor="designation"
-              className="text-sm font-semibold text-primary"
-            >
-              Designation
-            </label>
-
-            <select
-              id="designation"
-              name="designation"
-              value={values.designation}
-              onChange={handleChange}
-              className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
-            >
-              <option value="">Select Designation</option>
-
-              <option value="Owner">Owner</option>
-
-              <option value="Purchase Head">
-                Purchase Head
-              </option>
-
-              <option value="Plant Manager">
-                Plant Manager
-              </option>
-
-              <option value="Operations Head">
-                Operations Head
-              </option>
-
-              <option value="Other">Other</option>
-            </select>
-          </div>
-        )}
-
-        {/* Phone + Email */}
-        <div
-          className={`grid gap-5 ${
-            compact
-              ? "grid-cols-1"
-              : "grid-cols-1 md:grid-cols-2"
-          }`}
-        >
-          {/* Phone */}
-          <div className="space-y-1.5">
-            <label
-              htmlFor="phone"
-              className="text-sm font-semibold text-primary"
-            >
-              Phone Number *
-            </label>
-
-            <input
-              id="phone"
-              name="phone"
-              value={values.phone}
-              onChange={handleChange}
-              placeholder="Your Phone Number"
-              autoComplete="tel"
-              inputMode="numeric"
-              className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
-            />
-
-            {errors.phone ? (
-              <p className="text-sm text-destructive">
-                {errors.phone}
-              </p>
-            ) : null}
-          </div>
-
-          {/* Email */}
-          {!compact && (
+            {/* Email */}
             <div className="space-y-1.5">
               <label
                 htmlFor="email"
-                className="text-sm font-semibold text-primary"
+                className="text-sm font-semibold text-black"
               >
                 Email Address *
               </label>
@@ -335,7 +285,7 @@ export default function LeadForm({
                 onChange={handleChange}
                 placeholder="Your Email Address"
                 autoComplete="email"
-                className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+                className="flex h-12 w-full rounded-xl border border-input bg-white px-4 py-2 text-sm text-black placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
               />
 
               {errors.email ? (
@@ -344,93 +294,268 @@ export default function LeadForm({
                 </p>
               ) : null}
             </div>
-          )}
-        </div>
 
-        {/* Furnace Requirement */}
-        <div className="space-y-1.5">
-          <label
-            htmlFor="furnace_requirement"
-            className="text-sm font-semibold text-primary"
-          >
-            Furnace Requirement *
-          </label>
+            {/* Phone */}
+            <div className="space-y-1.5">
+              <label
+                htmlFor="phone"
+                className="text-sm font-semibold text-black"
+              >
+                Phone Number *
+              </label>
 
-          <select
-            id="furnace_requirement"
-            name="furnace_requirement"
-            value={values.furnace_requirement}
-            onChange={handleChange}
-            className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
-          >
-            <option value="">
-              Select Requirement
-            </option>
+              <input
+                id="phone"
+                name="phone"
+                value={values.phone}
+                onChange={handleChange}
+                placeholder="Your Phone Number"
+                autoComplete="tel"
+                inputMode="numeric"
+                className="flex h-12 w-full rounded-xl border border-input bg-white px-4 py-2 text-sm text-black placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+              />
 
-            <option value="Bogie Hearth Oven">
-              Bogie Hearth Oven
-            </option>
+              {errors.phone ? (
+                <p className="text-sm text-destructive">
+                  {errors.phone}
+                </p>
+              ) : null}
+            </div>
 
-            <option value="Ageing Furnace">
-              Ageing Furnace
-            </option>
+            {/* Furnace Requirement */}
+            <div className="space-y-1.5">
+              <label
+                htmlFor="furnace_requirement"
+                className="text-sm font-semibold text-black"
+              >
+                Furnace Requirement *
+              </label>
 
-            <option value="Custom Requirement">
-              Custom Requirement
-            </option>
-          </select>
+              <select
+                id="furnace_requirement"
+                name="furnace_requirement"
+                value={values.furnace_requirement}
+                onChange={handleChange}
+                className="flex h-12 w-full rounded-xl border border-input bg-white px-4 py-2 text-sm text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+              >
+                <option value="">
+                  Select Requirement
+                </option>
 
-          {errors.furnace_requirement ? (
-            <p className="text-sm text-destructive">
-              {errors.furnace_requirement}
-            </p>
-          ) : null}
-        </div>
+                <option value="Bogie Hearth Oven">
+                  Bogie Hearth Oven
+                </option>
 
-        {/* Production Capacity */}
-        {!compact && (
-          <div className="space-y-1.5">
-            <label
-              htmlFor="production_capacity"
-              className="text-sm font-semibold text-primary"
+                <option value="Ageing Furnace">
+                  Ageing Furnace
+                </option>
+
+                <option value="Custom Requirement">
+                  Custom Requirement
+                </option>
+              </select>
+
+              {errors.furnace_requirement ? (
+                <p className="text-sm text-destructive">
+                  {errors.furnace_requirement}
+                </p>
+              ) : null}
+            </div>
+
+            <Button
+              type="button"
+              onClick={handleStepOne}
+              className={`h-14 w-full bg-primary text-base font-bold text-white hover:bg-primary/90 ${buttonclassName}`}
+              disabled={isSubmitting}
             >
-              Production Capacity Needed *
-            </label>
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                "NEXT STEP →"
+              )}
+            </Button>
+          </>
+        )}
 
-            <select
-              id="production_capacity"
-              name="production_capacity"
-              value={values.production_capacity}
-              onChange={handleChange}
-              className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
-            >
-              <option value="">
-                Select Production Capacity
-              </option>
+        {/* HERO FORM STEP 2 */}
+        {isTwoStepHero && step === 2 && (
+          <>
+            {/* Company Name */}
+            <div className="space-y-1.5">
+              <label
+                htmlFor="company_name"
+                className="text-sm font-semibold text-black"
+              >
+                Company Name *
+              </label>
 
-              <option value="<500 kg">
-                Less than 500 kg
-              </option>
+              <input
+                id="company_name"
+                name="company_name"
+                value={values.company_name}
+                onChange={handleChange}
+                placeholder="Your Company Name"
+                className="flex h-12 w-full rounded-xl border border-input bg-white px-4 py-2 text-sm text-black placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+              />
 
-              <option value="500 kg–5 Ton">
-                500 kg – 5 Ton
-              </option>
+              {errors.company_name ? (
+                <p className="text-sm text-destructive">
+                  {errors.company_name}
+                </p>
+              ) : null}
+            </div>
 
-              <option value="5–20 Ton">
-                5 – 20 Ton
-              </option>
+            {/* Designation */}
+            <div className="space-y-1.5">
+              <label
+                htmlFor="designation"
+                className="text-sm font-semibold text-black"
+              >
+                Designation
+              </label>
 
-              <option value="20+ Ton">
-                20+ Ton
-              </option>
-            </select>
+              <select
+                id="designation"
+                name="designation"
+                value={values.designation}
+                onChange={handleChange}
+                className="flex h-12 w-full rounded-xl border border-input bg-white px-4 py-2 text-sm text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+              >
+                <option value="">Select Designation</option>
 
-            {errors.production_capacity ? (
-              <p className="text-sm text-destructive">
-                {errors.production_capacity}
-              </p>
-            ) : null}
-          </div>
+                <option value="Owner">Owner</option>
+
+                <option value="Purchase Head">
+                  Purchase Head
+                </option>
+
+                <option value="Plant Manager">
+                  Plant Manager
+                </option>
+
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            {/* Production Capacity */}
+            <div className="space-y-1.5">
+              <label
+                htmlFor="production_capacity"
+                className="text-sm font-semibold text-black"
+              >
+                Production Capacity Needed *
+              </label>
+
+              <select
+                id="production_capacity"
+                name="production_capacity"
+                value={values.production_capacity}
+                onChange={handleChange}
+                className="flex h-12 w-full rounded-xl border border-input bg-white px-4 py-2 text-sm text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+              >
+                <option value="">
+                  Select Production Capacity
+                </option>
+
+                <option value="<500 kg">
+                  Less than 500 kg
+                </option>
+
+                <option value="500 kg–5 Ton">
+                  500 kg – 5 Ton
+                </option>
+
+                <option value="5–20 Ton">
+                  5 – 20 Ton
+                </option>
+
+                <option value="20+ Ton">
+                  20+ Ton
+                </option>
+              </select>
+
+              {errors.production_capacity ? (
+                <p className="text-sm text-destructive">
+                  {errors.production_capacity}
+                </p>
+              ) : null}
+            </div>
+          </>
+        )}
+
+        {/* COMPACT FORM */}
+        {compact && (
+          <>
+            {/* Phone */}
+            <div className="space-y-1.5">
+              <label
+                htmlFor="phone"
+                className="text-sm font-semibold text-black"
+              >
+                Phone Number *
+              </label>
+
+              <input
+                id="phone"
+                name="phone"
+                value={values.phone}
+                onChange={handleChange}
+                placeholder="Your Phone Number"
+                autoComplete="tel"
+                inputMode="numeric"
+                className="flex h-12 w-full rounded-xl border border-input bg-white px-4 py-2 text-sm text-black placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+              />
+
+              {errors.phone ? (
+                <p className="text-sm text-destructive">
+                  {errors.phone}
+                </p>
+              ) : null}
+            </div>
+
+            {/* Furnace Requirement */}
+            <div className="space-y-1.5">
+              <label
+                htmlFor="furnace_requirement"
+                className="text-sm font-semibold text-black"
+              >
+                Furnace Requirement *
+              </label>
+
+              <select
+                id="furnace_requirement"
+                name="furnace_requirement"
+                value={values.furnace_requirement}
+                onChange={handleChange}
+                className="flex h-12 w-full rounded-xl border border-input bg-white px-4 py-2 text-sm text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+              >
+                <option value="">
+                  Select Requirement
+                </option>
+
+                <option value="Bogie Hearth Oven">
+                  Bogie Hearth Oven
+                </option>
+
+                <option value="Ageing Furnace">
+                  Ageing Furnace
+                </option>
+
+                <option value="Custom Requirement">
+                  Custom Requirement
+                </option>
+              </select>
+
+              {errors.furnace_requirement ? (
+                <p className="text-sm text-destructive">
+                  {errors.furnace_requirement}
+                </p>
+              ) : null}
+            </div>
+          </>
         )}
 
         {/* Submit Error */}
@@ -440,21 +565,23 @@ export default function LeadForm({
           </p>
         ) : null}
 
-        {/* Submit Button */}
-        <Button
-          type="submit"
-          className={`h-14 w-full bg-secondary text-base font-bold text-white hover:bg-secondary/90 ${buttonclassName}`}
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? (
-            <>
-              <Loader2 className="mr-2 animate-spin" />
-              Processing...
-            </>
-          ) : (
-            buttonText
-          )}
-        </Button>
+        {/* Final Submit Button */}
+        {(compact || step === 2) && (
+          <Button
+            type="submit"
+            className={`h-14 w-full bg-primary text-base font-bold text-white hover:bg-primary/90 ${buttonclassName}`}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 animate-spin" />
+                Processing...
+              </>
+            ) : (
+              buttonText
+            )}
+          </Button>
+        )}
 
         {/* Bottom Text */}
         <p className="text-center text-xs leading-relaxed text-muted-foreground">
