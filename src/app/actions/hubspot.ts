@@ -4,52 +4,85 @@
  * Server Action to submit lead data to HubSpot CRM.
  * Requires HUBSPOT_ACCESS_TOKEN environment variable.
  */
+
 export async function submitToHubSpot(data: {
+  company_name: string;
   name: string;
+  designation: string;
   email: string;
   phone: string;
-  courseInterest: string;
+  furnace_requirement: string;
+  production_capacity: string;
+  lead_source: string;
 }) {
   const accessToken = process.env.HUBSPOT_ACCESS_TOKEN;
 
   if (!accessToken) {
     console.error('HUBSPOT_ACCESS_TOKEN is not configured in environment variables.');
-    return { success: false, error: 'Server configuration error.' };
+
+    return {
+      success: false,
+      error: 'Server configuration error.',
+    };
   }
 
   try {
     const [firstname, ...lastnameParts] = data.name.trim().split(/\s+/);
+
     const lastname = lastnameParts.join(' ');
 
-    const response = await fetch('https://api.hubapi.com/crm/v3/objects/contacts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({
-        properties: {
-          email: data.email,
-          firstname: firstname,
-          lastname: lastname || '',
-          phone: data.phone,
-          // Mapping course interest to a standard or custom property
-          // Using 'lifecyclestage' or a custom 'course_interest' property if exists
-          // For now, we'll use 'notes' via associations or just standard properties
-          jobtitle: `Interested in: ${data.courseInterest}`, 
+    const response = await fetch(
+      'https://api.hubapi.com/crm/v3/objects/contacts',
+      {
+        method: 'POST',
+
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
         },
-      }),
-    });
+
+        body: JSON.stringify({
+          properties: {
+            email: data.email,
+
+            firstname: firstname,
+
+            lastname: lastname || '',
+
+            phone: data.phone,
+
+            company: data.company_name,
+
+            jobtitle: data.designation,
+
+            lead_source: data.lead_source,
+
+            furnace_requirement: data.furnace_requirement,
+
+            production_capacity: data.production_capacity,
+          },
+        }),
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json();
+
       console.error('HubSpot API Error:', errorData);
-      return { success: false, error: errorData.message || 'Failed to sync with CRM.' };
+
+      return {
+        success: false,
+        error: errorData.message || 'Failed to sync with CRM.',
+      };
     }
 
     return { success: true };
   } catch (error) {
     console.error('HubSpot Submission Exception:', error);
-    return { success: false, error: 'Internal server error during CRM sync.' };
+
+    return {
+      success: false,
+      error: 'Internal server error during CRM sync.',
+    };
   }
 }

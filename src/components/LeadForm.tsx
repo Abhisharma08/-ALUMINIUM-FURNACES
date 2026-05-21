@@ -1,164 +1,466 @@
 "use client"
 
-import { useState } from "react"
+import React, { useState } from "react"
 import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useToast } from "@/hooks/use-toast"
 import { Loader2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import { submitToHubSpot } from "@/app/actions/hubspot"
 
-const formSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
-  phone: z.string().min(10, { message: "Enter a valid 10-digit phone number." }).max(12),
-  email: z.string().email({ message: "Please enter a valid email address." }),
-  courseInterest: z.string({ required_error: "Please select a course." }),
-})
+type FormValues = {
+  company_name: string
+  name: string
+  designation: string
+  email: string
+  phone: string
+  furnace_requirement: string
+  production_capacity: string
+  lead_source: string
+}
 
-export default function LeadForm({ className }: { className?: string }) {
+type FormErrors = Partial<Record<keyof FormValues, string>> & {
+  submit?: string
+}
+
+type LeadFormProps = {
+  className?: string
+  title?: string
+  subtitle?: string
+  buttonText?: string
+  bottomText?: React.ReactNode
+  buttonclassName?: string
+  compact?: boolean
+}
+
+const defaultValues: FormValues = {
+  company_name: "",
+  name: "",
+  designation: "",
+  email: "",
+  phone: "",
+  furnace_requirement: "",
+  production_capacity: "",
+  lead_source: "Aluminium Furnace LP",
+}
+
+function validateForm(values: FormValues, compact: boolean) {
+  const errors: FormErrors = {}
+
+  if (!compact && values.company_name.trim().length < 2) {
+    errors.company_name = "Please enter your company name."
+  }
+
+  if (!compact && values.name.trim().length < 2) {
+    errors.name = "Name must be at least 2 characters."
+  }
+
+  const phoneDigits = values.phone.replace(/\D/g, "")
+
+  if (phoneDigits.length < 10 || phoneDigits.length > 12) {
+    errors.phone = "Enter a valid phone number."
+  }
+
+  if (
+    !compact &&
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)
+  ) {
+    errors.email = "Please enter a valid email address."
+  }
+
+  if (!values.furnace_requirement) {
+    errors.furnace_requirement =
+      "Please select a furnace requirement."
+  }
+
+  if (
+    !compact &&
+    !values.production_capacity
+  ) {
+    errors.production_capacity =
+      "Please select production capacity."
+  }
+
+  return errors
+}
+
+export default function LeadForm({
+  className,
+  title = "Get a Free Technical Consultation",
+  subtitle = "Discuss your furnace requirement with our engineers.",
+  buttonText = "REQUEST FREE QUOTE NOW →",
+  buttonclassName = "",
+  compact = false,
+  bottomText = (
+    <>
+      Response within 4 working hours
+      <br />
+      Your details are kept confidential and used only for consultation purposes
+    </>
+  ),
+}: LeadFormProps) {
+  const [values, setValues] = useState<FormValues>(defaultValues)
+
+  const [errors, setErrors] = useState<FormErrors>({})
+
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const { toast } = useToast()
+
   const router = useRouter()
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      phone: "",
-      email: "",
-      courseInterest: "",
-    },
-  })
+  function handleChange(
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement
+    >
+  ) {
+    const { name, value } = event.target
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsSubmitting(true)
-    
-    try {
-      // Attempt to sync with CRM
-      const result = await submitToHubSpot(values);
-      
-      if (result.success) {
-        // Success: Redirect immediately
-        router.push("/thank-you")
-      } else {
-        // Partial error (e.g. CRM sync failed but data was otherwise valid)
-        // We still redirect to thank you for a better user experience
-        console.warn("CRM Sync Issue:", result.error);
-        router.push("/thank-you")
+    setValues((current) => ({
+      ...current,
+      [name]: value,
+    }))
+
+    setErrors((current) => {
+      if (!current[name as keyof FormErrors] && !current.submit) {
+        return current
       }
+
+      return {
+        ...current,
+        [name]: undefined,
+        submit: undefined,
+      }
+    })
+  }
+
+  async function handleSubmit(
+    event: React.FormEvent<HTMLFormElement>
+  ) {
+    event.preventDefault()
+
+    const validationErrors = validateForm(values, compact)
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
+      return
+    }
+
+    setErrors({})
+
+    setIsSubmitting(true)
+
+    try {
+      const result = await submitToHubSpot(values)
+
+      if (!result.success) {
+        console.warn("CRM Sync Issue:", result.error)
+      }
+
+      router.push("/thank-you")
     } catch (error) {
-      // Network error or unexpected exception
-      console.error("Submission Exception:", error);
-      toast({
-        variant: "destructive",
-        title: "Submission Error",
-        description: "We encountered a problem. Please try again or contact us directly.",
+      console.error("Submission Exception:", error)
+
+      setErrors({
+        submit:
+          "We encountered a problem. Please try again or contact us directly.",
       })
-      // Even on failure, if the user sees this multiple times, we might want to redirect anyway
-      // to avoid them getting stuck, but here we let them try again.
-    } finally {
-      // If we've successfully called router.push, the page will change soon.
-      // We only stop the loader if we stay on the page.
+
       setIsSubmitting(false)
     }
   }
 
   return (
-    <div className={`bg-white p-6 md:p-8 rounded-xl shadow-2xl border border-muted ${className}`}>
-      <h3 className="text-2xl font-headline text-primary mb-2">Start Your Graphic Design Journey</h3>
-      <p className="text-sm text-muted-foreground mb-6">Our counsellor will contact you shortly. No spam, only career guidance.</p>
-      
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Full Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your Name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email Address</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Your Email" type="email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+    <div
+      className={`rounded-2xl border border-white/10 bg-white p-6 shadow-2xl md:p-8 ${className}`}
+    >
+      <h3 className="mb-2 text-3xl md:text-4xl font-bold text-primary leading-tight">
+        {title}
+      </h3>
+
+      <p className="mb-6 text-sm text-muted-foreground leading-relaxed">
+        {subtitle}
+      </p>
+
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-5"
+        noValidate
+      >
+        <input
+          type="hidden"
+          name="lead_source"
+          value={values.lead_source}
+        />
+
+        {/* Company Name */}
+        {!compact && (
+          <div className="space-y-1.5">
+            <label
+              htmlFor="company_name"
+              className="text-sm font-semibold text-primary"
+            >
+              Company Name *
+            </label>
+
+            <input
+              id="company_name"
+              name="company_name"
+              value={values.company_name}
+              onChange={handleChange}
+              placeholder="Your Company Name"
+              className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
             />
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Your Phone Number" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
+            {errors.company_name ? (
+              <p className="text-sm text-destructive">
+                {errors.company_name}
+              </p>
+            ) : null}
           </div>
-          <FormField
-            control={form.control}
-            name="courseInterest"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Interested Graphic Design Program</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a program" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="undergraduate">Under Graduate Program</SelectItem>
-                    <SelectItem value="postgraduate">Post Graduate Program</SelectItem>
-                    <SelectItem value="advanced-diploma">Advanced Diploma</SelectItem>
-                    <SelectItem value="diploma">Diploma</SelectItem>
-                    <SelectItem value="short-term">Short Term Course</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button 
-            type="submit" 
-            className="w-full bg-secondary hover:bg-secondary/90 text-white font-bold h-14 text-lg min-h-14"
-            disabled={isSubmitting}
+        )}
+
+        {/* Name */}
+        {!compact && (
+          <div className="space-y-1.5">
+            <label
+              htmlFor="name"
+              className="text-sm font-semibold text-primary"
+            >
+              Your Name *
+            </label>
+
+            <input
+              id="name"
+              name="name"
+              value={values.name}
+              onChange={handleChange}
+              placeholder="Your Full Name"
+              autoComplete="name"
+              className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+            />
+
+            {errors.name ? (
+              <p className="text-sm text-destructive">
+                {errors.name}
+              </p>
+            ) : null}
+          </div>
+        )}
+
+        {/* Designation */}
+        {!compact && (
+          <div className="space-y-1.5">
+            <label
+              htmlFor="designation"
+              className="text-sm font-semibold text-primary"
+            >
+              Designation
+            </label>
+
+            <select
+              id="designation"
+              name="designation"
+              value={values.designation}
+              onChange={handleChange}
+              className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+            >
+              <option value="">Select Designation</option>
+
+              <option value="Owner">Owner</option>
+
+              <option value="Purchase Head">
+                Purchase Head
+              </option>
+
+              <option value="Plant Manager">
+                Plant Manager
+              </option>
+
+              <option value="Operations Head">
+                Operations Head
+              </option>
+
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        )}
+
+        {/* Phone + Email */}
+        <div
+          className={`grid gap-5 ${
+            compact
+              ? "grid-cols-1"
+              : "grid-cols-1 md:grid-cols-2"
+          }`}
+        >
+          {/* Phone */}
+          <div className="space-y-1.5">
+            <label
+              htmlFor="phone"
+              className="text-sm font-semibold text-primary"
+            >
+              Phone Number *
+            </label>
+
+            <input
+              id="phone"
+              name="phone"
+              value={values.phone}
+              onChange={handleChange}
+              placeholder="Your Phone Number"
+              autoComplete="tel"
+              inputMode="numeric"
+              className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+            />
+
+            {errors.phone ? (
+              <p className="text-sm text-destructive">
+                {errors.phone}
+              </p>
+            ) : null}
+          </div>
+
+          {/* Email */}
+          {!compact && (
+            <div className="space-y-1.5">
+              <label
+                htmlFor="email"
+                className="text-sm font-semibold text-primary"
+              >
+                Email Address *
+              </label>
+
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={values.email}
+                onChange={handleChange}
+                placeholder="Your Email Address"
+                autoComplete="email"
+                className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+              />
+
+              {errors.email ? (
+                <p className="text-sm text-destructive">
+                  {errors.email}
+                </p>
+              ) : null}
+            </div>
+          )}
+        </div>
+
+        {/* Furnace Requirement */}
+        <div className="space-y-1.5">
+          <label
+            htmlFor="furnace_requirement"
+            className="text-sm font-semibold text-primary"
           >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="animate-spin mr-2" />
-                Processing...
-              </>
-            ) : (
-              "Submit"
-            )}
-          </Button>
-          <p className="text-center text-[10px] text-muted-foreground uppercase tracking-wider">
-            Limited Seats for the Next Batch
+            Furnace Requirement *
+          </label>
+
+          <select
+            id="furnace_requirement"
+            name="furnace_requirement"
+            value={values.furnace_requirement}
+            onChange={handleChange}
+            className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+          >
+            <option value="">
+              Select Requirement
+            </option>
+
+            <option value="Bogie Hearth Oven">
+              Bogie Hearth Oven
+            </option>
+
+            <option value="Ageing Furnace">
+              Ageing Furnace
+            </option>
+
+            <option value="Custom Requirement">
+              Custom Requirement
+            </option>
+          </select>
+
+          {errors.furnace_requirement ? (
+            <p className="text-sm text-destructive">
+              {errors.furnace_requirement}
+            </p>
+          ) : null}
+        </div>
+
+        {/* Production Capacity */}
+        {!compact && (
+          <div className="space-y-1.5">
+            <label
+              htmlFor="production_capacity"
+              className="text-sm font-semibold text-primary"
+            >
+              Production Capacity Needed *
+            </label>
+
+            <select
+              id="production_capacity"
+              name="production_capacity"
+              value={values.production_capacity}
+              onChange={handleChange}
+              className="flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+            >
+              <option value="">
+                Select Production Capacity
+              </option>
+
+              <option value="<500 kg">
+                Less than 500 kg
+              </option>
+
+              <option value="500 kg–5 Ton">
+                500 kg – 5 Ton
+              </option>
+
+              <option value="5–20 Ton">
+                5 – 20 Ton
+              </option>
+
+              <option value="20+ Ton">
+                20+ Ton
+              </option>
+            </select>
+
+            {errors.production_capacity ? (
+              <p className="text-sm text-destructive">
+                {errors.production_capacity}
+              </p>
+            ) : null}
+          </div>
+        )}
+
+        {/* Submit Error */}
+        {errors.submit ? (
+          <p className="rounded-xl border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+            {errors.submit}
           </p>
-        </form>
-      </Form>
+        ) : null}
+
+        {/* Submit Button */}
+        <Button
+          type="submit"
+          className={`h-14 w-full bg-secondary text-base font-bold text-white hover:bg-secondary/90 ${buttonclassName}`}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <>
+              <Loader2 className="mr-2 animate-spin" />
+              Processing...
+            </>
+          ) : (
+            buttonText
+          )}
+        </Button>
+
+        {/* Bottom Text */}
+        <p className="text-center text-xs leading-relaxed text-muted-foreground">
+          {bottomText}
+        </p>
+      </form>
     </div>
   )
 }
