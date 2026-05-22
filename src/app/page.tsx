@@ -43,62 +43,59 @@ export default function LandingPage() {
   }
 
   return (
-<div className="flex flex-col min-h-screen overflow-x-hidden bg-background">
+<div className="flex flex-col min-h-screen overflow-x-hidden bg-white">
   {/* URGENCY BAR */}
-  <div className="fixed top-0 z-[60] w-full bg-primary py-2 text-center text-sm font-semibold text-white">
+  {/* <div className="fixed top-0 z-[60] w-full bg-primary py-2 text-center text-sm font-semibold text-white">
     🔥 Limited Slots Open — Get Your Custom Furnace Quote Within 4 Working Hours
     <span className="mx-3 hidden md:inline">|</span>
     <span className="block md:inline">
       Call Now: +91 98113 04306
     </span>
-  </div>
+  </div> */}
 
-  {/* NAVBAR */}
-  <nav className="fixed top-8 w-full z-50 border-b border-white/10 bg-slate-700 backdrop-blur-md overflow-x-hidden">
-    <div className="container mx-auto flex h-24 max-w-7xl items-center justify-between px-4">
-      {/* LEFT */}
-      <div className="flex items-center gap-5">
-        <Badge className="hidden lg:flex bg-primary text-white border-none px-5 py-2 text-sm font-bold rounded-full">
-          35 Years of Trust
-        </Badge>
+{/* NAVBAR */}
+<nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-slate-700/95 backdrop-blur-md overflow-x-hidden">
+  <div className="container mx-auto flex h-16 md:h-24 max-w-7xl items-center justify-between px-4">
+    
+    {/* LEFT */}
+    <div className="flex items-center gap-3 md:gap-5">
 
-        <Link href="/" className="flex items-center gap-4">
-          <Image
-            src={LOGO_URL}
-            alt="Continental Furnaces"
-            width={220}
-            height={70}
-            className="h-14 w-auto object-contain"
-            priority
-          />
-        </Link>
-      </div>
-
-      {/* RIGHT */}
-      <div className="hidden lg:flex items-center gap-5">
-        <div className="text-right">
-          <p className="text-sm font-semibold text-white">
-            📞 +91 98113 04306
-          </p>
-
-          <p className="text-xs text-white/60">
-            ISO 9001:2015 & ISO 14001:2015 Certified
-          </p>
-        </div>
-
-        <Button
-          className="bg-primary hover:bg-primary/90 text-white font-bold px-7 h-12 rounded-xl"
-          onClick={() => {
-            scrollToLeadForm()
-          }}
-        >
-          GET FREE QUOTE →
-        </Button>
-      </div>
+      {/* Logo */}
+      <Link href="/" className="flex items-center">
+        <Image
+          src={LOGO_URL}
+          alt="Continental Furnaces"
+          width={180}
+          height={55}
+          className="h-10 md:h-14 w-auto object-contain"
+          priority
+        />
+      </Link>
     </div>
-  </nav>
 
-  <main className="pt-[104px] pb-24 lg:pb-0 w-full">
+    {/* RIGHT */}
+    <div className="hidden lg:flex items-center gap-5">
+      <div className="text-right">
+
+        <p className="text-xs text-white/60">
+          ISO 9001:2015 &
+          <br />ISO 14001:2015 Certified
+        </p>
+      </div>
+
+      <Button
+        className="bg-primary hover:bg-primary/90 text-white font-bold px-7 h-12 rounded-xl"
+        onClick={() => {
+          scrollToLeadForm()
+        }}
+      >
+        GET FREE QUOTE →
+      </Button>
+    </div>
+  </div>
+</nav>
+
+  <main className="pt-[64px] md:pt-[96px] pb-24 lg:pb-0 w-full">
     {/* HERO SECTION */}
     <section className="relative overflow-hidden bg-background py-20 lg:py-28 w-full">
       {/* Background Image */}
@@ -122,10 +119,6 @@ export default function LandingPage() {
         <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-[54%_38%] xl:gap-24">
           {/* LEFT CONTENT */}
           <div className="space-y-8 text-white pt-4">
-            {/* Eyebrow */}
-            <div className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-5 py-2 text-xs font-semibold text-primary backdrop-blur-sm">
-              Aluminium Furnace Manufacturer India | Since 1987
-            </div>
 
             {/* Main Heading */}
             <div className="space-y-5">
@@ -146,171 +139,67 @@ export default function LandingPage() {
               </p>
             </div>
 
-            {/* SPEC TILES */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {/* SPEC / TRUST TILES */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 max-w-3xl">
               {[
                 {
-                  title: "Bogie Hearth Range",
-                  value: "250°C – 600°C",
+                  title: "35+ Years",
+                  subtitle: "Industrial Furnace Manufacturing",
+                  icon: <Factory className="h-8 w-8 text-primary" />,
                 },
                 {
-                  title: "Ageing Furnace Range",
-                  value: "95°C – 205°C",
+                  title: "ISO Certified",
+                  subtitle: "9001:2015 & 14001:2015",
+                  icon: <ShieldCheck className="h-8 w-8 text-primary" />,
                 },
                 {
-                  title: "Heating Mode",
-                  value: "Electric — Clean, No Contamination",
+                  title: "Custom Built",
+                  subtitle: "Engineered Per Production Line",
+                  icon: <Settings className="h-8 w-8 text-primary" />,
                 },
                 {
-                  title: "Automation",
-                  value: "PLC/HMI Precision Control",
+                  title: "Pan India",
+                  subtitle: "Installation & Service Support",
+                  icon: <Wrench className="h-8 w-8 text-primary" />,
                 },
               ].map((item, i) => (
                 <div
                   key={i}
                   className="rounded-2xl border border-white/10 bg-card/70 p-5 backdrop-blur-sm"
                 >
-                  <p className="mb-2 text-sm font-medium text-white/60">
-                    {item.title}
-                  </p>
+                  <div className="flex items-start gap-4">
+                    <div className="mt-1 shrink-0">
+                      {item.icon}
+                    </div>
 
-                  <p className="text-lg font-bold leading-snug text-white">
-                    {item.value}
-                  </p>
+                    <div className="space-y-1">
+                      <h3 className="text-xl font-bold leading-snug text-white">
+                        {item.title}
+                      </h3>
+
+                      <p className="text-sm leading-relaxed text-white/70">
+                        {item.subtitle}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
-
-            {/* TRUST PILLS */}
-            <div className="flex flex-wrap gap-3 pt-2">
-              {[
-                "✅ ISO 9001:2015 Certified",
-                "🏆 35+ Years Manufacturing Trust",
-                "⚡ Electric / Gas / Oil Heating",
-                "🔧 End-to-End Support Pan-India",
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  className="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-white backdrop-blur-sm"
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
+        </div>
 
           {/* RIGHT FORM */}
           <div
             className="lg:sticky lg:top-32"
             id="top-form-desktop"
           >
-            <LeadForm/>
+            <LeadForm            />
           </div>
         </div>
       </div>
     </section>
        {/* V2 changes SECTION start*/}
         
-      {/* TRUST STRIP */}
-<section className="relative z-20 -mt-10 pb-8 w-full">
-  <div className="container mx-auto max-w-7xl px-4">
-    <div className="grid grid-cols-2 gap-4 rounded-3xl border border-white/10 bg-slate-700 p-6 shadow-2xl backdrop-blur-xl lg:grid-cols-4">
-      {[
-        {
-          title: "35+ Years",
-          subtitle: "Industrial Furnace Manufacturing",
-          icon: <Factory className="h-8 w-8 text-primary" />,
-        },
-        {
-          title: "ISO Certified",
-          subtitle: "9001:2015 & 14001:2015",
-          icon: <ShieldCheck className="h-8 w-8 text-primary" />,
-        },
-        {
-          title: "Custom Built",
-          subtitle: "Engineered Per Production Line",
-          icon: <Settings className="h-8 w-8 text-primary" />,
-        },
-        {
-          title: "Pan India",
-          subtitle: "Installation & Service Support",
-          icon: <Wrench className="h-8 w-8 text-primary" />,
-        },
-      ].map((item, i) => (
-        <div
-          key={i}
-          className="flex items-start gap-4 rounded-2xl border border-white/5 bg-card p-5"
-        >
-          <div className="mt-1">
-            {item.icon}
-          </div>
-
-          <div className="space-y-1">
-            <h3 className="text-xl font-bold text-white">
-              {item.title}
-            </h3>
-
-            <p className="text-sm leading-relaxed text-white/70">
-              {item.subtitle}
-            </p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-
-{/* AD MATCH SECTION */}
-<section className="bg-white py-16 w-full border-y border-white/10">
-  <div className="container mx-auto max-w-7xl px-4">
-    <div className="grid grid-cols-1 lg:grid-cols-[65%_35%] gap-10 items-center">
-      {/* LEFT CONTENT */}
-      <div className="space-y-6">
-        <h2 className="text-3xl md:text-4xl font-bold leading-tight text-primary">
-          You searched for Aluminium Furnace Manufacturer — You Found the Right Company
-        </h2>
-
-        <p className="text-lg leading-relaxed text-slate-700 max-w-4xl">
-          Continental Furnaces — India's trusted aluminium furnace manufacturer since 1987.
-          Custom-built Bogie Hearth Ovens and Ageing Furnaces for cable, automotive,
-          wire, and recycling industries.
-        </p>
-
-        <Button
-          className="bg-primary text-white hover:bg-slate-500 font-bold px-8 h-14 rounded-xl"
-          onClick={() => {
-            scrollToLeadForm()
-          }}
-        >
-          GET QUOTE IN 4 HRS →
-        </Button>
-      </div>
-
-      {/* RIGHT SIDE */}
-      <div className="grid grid-cols-1 gap-4">
-        {[
-          "Bogie Hearth Oven",
-          "Ageing Furnace",
-          "Rotary Furnace",
-          "APCD Systems",
-        ].map((item, i) => (
-          <div
-            key={i}
-            className="rounded-2xl border border-white/10 bg-secondary p-5 backdrop-blur-sm"
-          >
-            <p className="text-lg font-semibold text-white">
-              {item}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
-        
-        
-        
-        
+         
 {/* SECTION 1 — PAIN POINTS */}
 <section className="relative overflow-hidden py-24 w-full">
   {/* Background Image */}
@@ -330,9 +219,9 @@ export default function LandingPage() {
 
   <div className="container relative z-10 mx-auto max-w-7xl px-4">
     {/* Eyebrow */}
-    <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
+    {/* <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
       The Real Cost of Getting It Wrong
-    </div>
+    </div> */}
 
     {/* Heading */}
     <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
@@ -384,9 +273,9 @@ export default function LandingPage() {
 <section className="py-20 bg-white w-full">
   <div className="container mx-auto px-4 max-w-7xl">
     {/* Eyebrow */}
-    <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
+    {/* <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
       Our Products
-    </div>
+    </div> */}
 
     {/* Heading */}
     <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
@@ -561,9 +450,9 @@ export default function LandingPage() {
 
   <div className="container relative z-10 mx-auto max-w-7xl px-4">
     {/* Eyebrow */}
-    <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
+    {/* <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
       Why These Furnaces Perform Better
-    </div>
+    </div> */}
 
     {/* Heading */}
     <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
@@ -624,40 +513,40 @@ export default function LandingPage() {
 <section className="py-24 bg-white w-full">
   <div className="container mx-auto px-4 max-w-7xl">
     {/* Eyebrow */}
-    <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
+    {/* <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
       Applications
-    </div>
+    </div> */}
 
     {/* Heading */}
     <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
-      Industries & Applications This Furnace Is Designed For
+      Industries This Furnace Is Designed For
     </h2>
 
     {/* GRID */}
     <div className="mt-14 grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
       {[
         {
-          title: "Application 1 — Cable Manufacturing 🔌",
+          title: "Cable Manufacturing 🔌",
           desc: "Aluminium conductor annealing for electrical cables — restores ductility and conductivity after cold drawing. Electric heating ensures contamination-free surface.",
         },
         {
-          title: "Application 2 — Automotive & Die Casting 🚗",
+          title: "Automotive & Die Casting 🚗",
           desc: "Precipitation hardening of aluminium alloy die castings — engine components, transmission housings, suspension parts requiring T6/T5 heat treatment.",
         },
         {
-          title: "Application 3 — Non-Ferrous Wire Industry 🔩",
+          title: "Non-Ferrous Wire Industry 🔩",
           desc: "Continuous or batch annealing of aluminium wire coils and rod coils — softening after drawing operations for further processing or final product use.",
         },
         {
-          title: "Application 4 — Aluminium Recycling Units ♻️",
+          title: "Aluminium Recycling Units ♻️",
           desc: "Heat treatment of recycled aluminium ingots and billets — homogenising microstructure and improving workability before rolling or extrusion.",
         },
         {
-          title: "Application 5 — Aerospace & Defence Parts ✈️",
+          title: "Aerospace & Defence Parts ✈️",
           desc: "Solution treatment and precipitation hardening of aerospace aluminium alloys (2xxx, 6xxx, 7xxx series) — precise temperature control and logging mandatory.",
         },
         {
-          title: "Application 6 — Metal Processing & Surface Treatment 🏭",
+          title: "Metal Processing & Surface Treatment 🏭",
           desc: "Stress relieving of aluminium fabrications before surface treatment — reduces distortion during plating, anodising, and coating operations.",
         },
       ].map((item, i) => (
@@ -682,28 +571,19 @@ export default function LandingPage() {
   </div>
 </section>       
         
-{/* SECTION 5 — AIR POLLUTION CONTROL DEVICE (APCD) */}
-<section className="relative overflow-hidden bg-slate-200 py-24 w-full">
-  {/* Background Grid */}
+{/* <section className="relative overflow-hidden bg-slate-200 py-24 w-full">
   <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.4)_1px,transparent_1px)] bg-[size:60px_60px]" />
 
   <div className="container relative z-10 mx-auto max-w-7xl px-4">
-    {/* Eyebrow */}
-    <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
-      Air Pollution Control
-    </div>
 
-    {/* Heading */}
     <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
       Air Pollution Control Device for Rotary Furnace (APCD)
     </h2>
 
-    {/* Intro */}
     <p className="mt-8 max-w-5xl mx-auto text-center text-lg leading-relaxed text-black">
       For aluminium recycling units using Rotary Furnaces — scrap batteries and lead oxide generate hazardous flue gases and dust. To protect employee health, meet factory environment standards, and comply with regulatory requirements, Continental Furnaces provides complete high-end Air Pollution Control Systems for installation with Rotary Furnaces.
     </p>
 
-    {/* COMPONENTS */}
     <div className="mt-16 grid grid-cols-1 gap-7 lg:grid-cols-3">
       {[
       {
@@ -752,9 +632,7 @@ export default function LandingPage() {
       ))}
     </div>
 
-    {/* TABLES */}
     <div className="mt-20 grid grid-cols-1 gap-10 lg:grid-cols-2 items-stretch">
-      {/* INLET */}
       <div className="overflow-hidden rounded-3xl border border-white/10 h-full flex flex-col">
         <div className="bg-primary px-6 py-4">
           <h3 className="text-xl font-bold text-white">
@@ -786,7 +664,6 @@ export default function LandingPage() {
         </table>
       </div>
 
-      {/* OUTLET */}
       <div className="overflow-hidden rounded-3xl border border-white/10">
         <div className="bg-primary px-6 py-4">
           <h3 className="text-xl font-bold text-white">
@@ -820,7 +697,6 @@ export default function LandingPage() {
       </div>
     </div>
 
-    {/* 4 STAGE TABLE */}
     <div className="mt-20 overflow-hidden rounded-3xl border border-white/10 h-full flex flex-col">
       <div className="bg-primary px-6 py-4">
         <h3 className="text-xl font-bold text-white">
@@ -853,89 +729,15 @@ export default function LandingPage() {
       </table>
     </div>
 
-    {/* COMPLIANCE BOX */}
     <div className="mt-16 rounded-3xl border border-green-500/30 bg-green-600/40 p-8">
       <p className="text-lg leading-relaxed text-black">
         ✅ Regulatory Compliance: The complete 4-stage APCD system brings your rotary furnace emissions within statutory norms — protecting employee health, meeting PCB/CPCB requirements, and eliminating risk of factory closure, fines, or production stoppages due to pollution violations.
       </p>
     </div>
   </div>
-</section>
+</section> */}
 
 
-{/* SECTION 6 — WHY CONTINENTAL FURNACES */}
-<section className="py-24 bg-white w-full">
-  <div className="container mx-auto px-4 max-w-7xl">
-    {/* Eyebrow */}
-    <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
-      Why Continental Furnaces
-    </div>
-
-    {/* Heading */}
-    <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
-      Why Aluminium Manufacturers Choose Continental Furnaces
-    </h2>
-
-    {/* GRID */}
-    <div className="mt-14 grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
-      {[
-        {
-          title: "35+ Years of Furnace Manufacturing Experience",
-          desc: "Established in 1987 — trusted industrial furnace manufacturer serving aluminium, steel, non-ferrous, automotive, and engineering industries across India.",
-        },
-        {
-          title: "Custom-Built Furnace Engineering",
-          desc: "Every furnace engineered according to your production capacity, load dimensions, process requirements, and plant layout — no one-size-fits-all systems.",
-        },
-        {
-          title: "PLC Automation + Data Logging",
-          desc: "Modern control systems with HMI interfaces, thermocouple integration, programmable cycles, alarms, and quality documentation support.",
-        },
-        {
-          title: "Pan India Installation & Service Support",
-          desc: "Installation, commissioning, training, AMC support, and spare supply available across India through experienced technical teams.",
-        },
-        {
-          title: "ISO 9001:2015 & ISO 14001:2015 Certified",
-          desc: "Certified manufacturing systems ensuring quality consistency, documented processes, and environmentally responsible operations.",
-        },
-        {
-          title: "Trusted by Industrial Manufacturers",
-          desc: "Used by cable manufacturers, automotive suppliers, non-ferrous processors, aluminium recyclers, and engineering industries nationwide.",
-        },
-      ].map((item, i) => (
-        <Card
-          key={i}
-          className="rounded-3xl border border-slate-200 bg-slate-700 shadow-xl"
-        >
-          <CardContent className="p-8 space-y-5">
-            <div className="h-1.5 w-20 rounded-full bg-primary" />
-
-            <h3 className="text-2xl font-bold leading-snug text-white">
-              {item.title}
-            </h3>
-
-            <p className="leading-relaxed text-white/90 italic">
-              {item.desc}
-            </p>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-
-    {/* CTA */}
-    <div className="mt-16 text-center">
-      <Button
-        className="bg-primary hover:bg-primary/90 text-white font-bold px-10 h-14 rounded-xl"
-        onClick={() => {
-          scrollToLeadForm()
-        }}
-      >
-        GET FREE TECHNICAL CONSULTATION →
-      </Button>
-    </div>
-  </div>
-</section>
 
 {/* SECTION 7 — INDUSTRIES SERVED */}
 <section className="relative overflow-hidden bg-slate-200 py-24 w-full">
@@ -944,9 +746,9 @@ export default function LandingPage() {
 
   <div className="container relative z-10 mx-auto max-w-7xl px-4">
     {/* Eyebrow */}
-    <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/20 px-5 py-2 text-sm font-semibold text-primary">
+    {/* <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/20 px-5 py-2 text-sm font-semibold text-primary">
       Industries We Serve
-    </div>
+    </div> */}
 
     {/* Heading */}
     <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
@@ -1014,9 +816,9 @@ export default function LandingPage() {
 <section className="py-24 bg-white w-full">
   <div className="container mx-auto px-4 max-w-7xl">
     {/* Eyebrow */}
-    <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
+    {/* <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
       Trust & Credentials
-    </div>
+    </div> */}
 
     {/* Heading */}
     <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
@@ -1080,31 +882,6 @@ export default function LandingPage() {
         </div>
       ))}
     </div>
-
-    {/* CONTACT BLOCK */}
-    <div className="mt-20 rounded-3xl border border-slate-200 bg-slate-200 p-10 text-center">
-      <h3 className="text-2xl font-bold text-primary">
-        Continental Furnaces
-      </h3>
-
-      <p className="mt-5 text-lg leading-relaxed text-slate-700">
-        Plot No. 34, New DLF Industrial Area, Faridabad, Haryana, India
-      </p>
-
-      <div className="mt-6 flex flex-col gap-3 text-slate-700">
-        <p>
-          📞 +91 98113 04306 | +91 98119 54834
-        </p>
-
-        <p>
-          📧 info@confur.net | confur.india@gmail.com
-        </p>
-
-        <p>
-          🌐 www.confur.net
-        </p>
-      </div>
-    </div>
   </div>
 </section>              
         {/* V2 changes SECTION */}
@@ -1112,7 +889,10 @@ export default function LandingPage() {
 {/* FINAL CTA */}
 <section className="py-24 bg-slate-200 relative overflow-hidden w-full">
   <div className="container mx-auto px-4 max-w-7xl relative z-10">
+    
+    {/* TOP GRID */}
     <div className="grid grid-cols-1 lg:grid-cols-[48%_52%] gap-14 items-start">
+      
       {/* LEFT CONTENT */}
       <div className="space-y-7 pt-6">
         <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
@@ -1128,9 +908,12 @@ export default function LandingPage() {
           Our furnace engineers will prepare a complete technical proposal —
           specifications, drawings, and indicative pricing.
           <br />
+          <br />
+          <br />
+          <span className="font-bold text-xl md:text-2xl text-primary">
           Within 24 hours. Zero obligation.
+          </span>
         </p>
-
       </div>
 
       {/* RIGHT FORM */}
@@ -1138,8 +921,26 @@ export default function LandingPage() {
         <LeadForm />
       </div>
     </div>
+
+    {/* CONTACT BLOCK */}
+    <div className="mt-20 rounded-3xl border border-slate-300 bg-white p-8 md:p-10 text-center shadow-xl">
+      <h3 className="text-2xl font-bold text-primary">
+        Continental Furnaces
+      </h3>
+
+      <p className="mt-5 text-base md:text-lg leading-relaxed text-slate-700 max-w-3xl mx-auto">
+        Plot No. 34, New DLF Industrial Area,
+        Faridabad, Haryana, India
+        <br />
+        <br />
+        📧 info@confur.net | confur.india@gmail.com
+        <br />
+        🌐 www.confur.net
+      </p>
+    </div>
   </div>
 </section>
+
       </main>
 
       {/* FOOTER */}
