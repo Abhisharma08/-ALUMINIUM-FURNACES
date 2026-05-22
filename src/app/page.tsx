@@ -509,67 +509,6 @@ export default function LandingPage() {
 </section>
         
         
-{/* SECTION 4 — APPLICATIONS */}
-<section className="py-24 bg-white w-full">
-  <div className="container mx-auto px-4 max-w-7xl">
-    {/* Eyebrow */}
-    {/* <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
-      Applications
-    </div> */}
-
-    {/* Heading */}
-    <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
-      Industries This Furnace Is Designed For
-    </h2>
-
-    {/* GRID */}
-    <div className="mt-14 grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
-      {[
-        {
-          title: "Cable Manufacturing 🔌",
-          desc: "Aluminium conductor annealing for electrical cables — restores ductility and conductivity after cold drawing. Electric heating ensures contamination-free surface.",
-        },
-        {
-          title: "Automotive & Die Casting 🚗",
-          desc: "Precipitation hardening of aluminium alloy die castings — engine components, transmission housings, suspension parts requiring T6/T5 heat treatment.",
-        },
-        {
-          title: "Non-Ferrous Wire Industry 🔩",
-          desc: "Continuous or batch annealing of aluminium wire coils and rod coils — softening after drawing operations for further processing or final product use.",
-        },
-        {
-          title: "Aluminium Recycling Units ♻️",
-          desc: "Heat treatment of recycled aluminium ingots and billets — homogenising microstructure and improving workability before rolling or extrusion.",
-        },
-        {
-          title: "Aerospace & Defence Parts ✈️",
-          desc: "Solution treatment and precipitation hardening of aerospace aluminium alloys (2xxx, 6xxx, 7xxx series) — precise temperature control and logging mandatory.",
-        },
-        {
-          title: "Metal Processing & Surface Treatment 🏭",
-          desc: "Stress relieving of aluminium fabrications before surface treatment — reduces distortion during plating, anodising, and coating operations.",
-        },
-      ].map((item, i) => (
-        <Card
-          key={i}
-          className="rounded-3xl border border-slate-200 bg-slate-700 shadow-xl"
-        >
-          <CardContent className="p-8 space-y-5">
-            <div className="h-1.5 w-20 rounded-full bg-primary" />
-
-            <h3 className="text-2xl font-bold leading-snug text-white">
-              {item.title}
-            </h3>
-
-            <p className="leading-relaxed text-slate-600 italic text-white/80">
-              {item.desc}
-            </p>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  </div>
-</section>       
         
 {/* <section className="relative overflow-hidden bg-slate-200 py-24 w-full">
   <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.4)_1px,transparent_1px)] bg-[size:60px_60px]" />
