@@ -17,6 +17,16 @@ import {
   Wrench,
   Cpu,
   BarChart3,
+  Zap,
+  Wind,
+  Snowflake,
+  Cable,
+  Car,
+  Drill,
+  Recycle,
+  Plane,
+  Battery,
+
 } from "lucide-react"
 import LeadForm from "@/components/LeadForm"
 import SectionHeader from "@/components/SectionHeader"
@@ -56,7 +66,7 @@ export default function LandingPage() {
   </div> */}
 
 {/* NAVBAR */}
-<nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-white/80 backdrop-blur-md overflow-x-hidden">
+<nav className="fixed top-0 w-full z-50 border-b border-slate-200 bg-white backdrop-blur-xl overflow-x-hidden">
   <div className="container mx-auto flex h-16 md:h-24 max-w-7xl items-center justify-between px-4">
     
     {/* LEFT */}
@@ -272,7 +282,7 @@ export default function LandingPage() {
 </section>       
         
 {/* SECTION 2 — PRODUCTS */}
-<section className="py-20 bg-white w-full">
+<section className="py-20 bg-slate-200 w-full">
   <div className="container mx-auto px-4 max-w-7xl">
     {/* Eyebrow */}
     {/* <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
@@ -446,7 +456,7 @@ export default function LandingPage() {
 
 
 {/* SECTION 3 — KEY FEATURES */}
-<section className="relative overflow-hidden bg-slate-200 py-24 w-full">
+<section className="relative overflow-hidden bg-white py-24 w-full">
   {/* Background Grid */}
   <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.4)_1px,transparent_1px)] bg-[size:60px_60px]" />
 
@@ -465,27 +475,33 @@ export default function LandingPage() {
     <div className="mt-14 grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
       {[
         {
-          title: "Electric Heating — Zero Contamination ⚡",
+          icon: Zap,
+          title: "Electric Heating — Zero Contamination",
           desc: "Electric heating eliminates combustion gases from the chamber — no oxidation, no carbon deposition, no sulphur contamination. Critical for high-purity aluminium grades used in cable and automotive sectors.",
         },
         {
-          title: "Forced Air Circulation System 🌀",
+          icon: Wind,
+          title: "Forced Air Circulation System",
           desc: "Internal forced air fans maintain uniform temperature distribution throughout the chamber — eliminating hotspots and cold zones. Every batch exits with consistent properties from edge to centre.",
         },
         {
-          title: "PLC/HMI Control + Data Logging 📊",
+          icon: BarChart3,
+          title: "PLC/HMI Control + Data Logging",
           desc: "Full PLC/HMI automation with thermocouple-based temperature control and complete cycle data logging. Generate quality reports for OEM audits, export certifications, and process traceability requirements.",
         },
         {
-          title: "Controlled Cooling Options ❄️",
+          icon: Snowflake,
+          title: "Controlled Cooling Options",
           desc: "Ageing furnace includes forced air cooling and optional water quenching — both critical for achieving target mechanical properties. Cooling rate directly determines final hardness of precipitation-hardened alloys.",
         },
         {
-          title: "Custom Capacity — Every Plant Size 🔧",
+          icon: Wrench,
+          title: "Custom Capacity — Every Plant Size",
           desc: "From hundreds of kilograms to several tonnes per batch — Continental builds every furnace to your exact production volume, floor layout, and load dimensions. No compromises on fit.",
         },
         {
-          title: "ISO 9001 Certified Manufacturing 🛡️",
+          icon: ShieldCheck,
+          title: "ISO 9001 Certified Manufacturing",
           desc: "Every furnace manufactured under ISO 9001:2015 quality system. Consistent build quality, documented processes, and full post-installation commissioning and AMC support across India.",
         },
       ].map((item, i) => (
@@ -494,7 +510,9 @@ export default function LandingPage() {
           className="rounded-3xl border border-white/10 bg-slate-700 shadow-2xl"
         >
           <CardContent className="p-8 space-y-5">
-            <div className="h-1.5 w-20 rounded-full bg-primary" />
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
+              <item.icon className="h-7 w-7 text-primary" strokeWidth={2.2} />
+            </div>
 
             <h3 className="text-2xl font-bold leading-snug text-white">
               {item.title}
@@ -697,59 +715,69 @@ export default function LandingPage() {
     </h2>
 
     {/* GRID */}
-    <div className="mt-14 grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-4 ">
-      {[
-        {
-          title: "🔌 Cable Manufacturing",
-          desc: "Aluminium conductor annealing for ACSR, AAC, and other cable grades",
-        },
-        {
-          title: "🚗 Automotive & Electrical",
-          desc: "T6/T5 heat treatment for die castings, connectors, electrical components",
-        },
-        {
-          title: "🔩 Non-Ferrous Wire",
-          desc: "Aluminium wire and rod coil annealing for downstream processing",
-        },
-        {
-          title: "♻️ Aluminium Recycling",
-          desc: "Homogenising recycled aluminium + APCD for rotary furnace compliance",
-        },
-        {
-          title: "🏭 Metal Processing",
-          desc: "Stress relieving before surface treatment, plating, and coating",
-        },
-        {
-          title: "✈️ Aerospace & Defence",
-          desc: "Controlled atmosphere solution treatment for aerospace alloys",
-        },
-        {
-          title: "🔋 Battery Recycling",
-          desc: "Rotary furnace + APCD for lead battery recycling operations",
-        },
-        {
-          title: "🏗️ Heat Treatment Units",
-          desc: "Batch ageing and annealing for contract heat treatment shops",
-        },
-      ].map((item, i) => (
-        <Card
-          key={i}
-          className="rounded-3xl border border-white/10 bg-slate-700 shadow-2xl"
-        >
-          <CardContent className="p-8 space-y-5">
-            <div className="h-1.5 w-20 rounded-full bg-primary" />
+    <div className="mt-14 grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-4">
+  {[
+    {
+      icon: Cable,
+      title: "Cable Manufacturing",
+      desc: "Aluminium conductor annealing for ACSR, AAC, and other cable grades",
+    },
+    {
+      icon: Car,
+      title: "Automotive & Electrical",
+      desc: "T6/T5 heat treatment for die castings, connectors, electrical components",
+    },
+    {
+      icon: Drill,
+      title: "Non-Ferrous Wire",
+      desc: "Aluminium wire and rod coil annealing for downstream processing",
+    },
+    {
+      icon: Recycle,
+      title: "Aluminium Recycling",
+      desc: "Homogenising recycled aluminium + APCD for rotary furnace compliance",
+    },
+    {
+      icon: Factory,
+      title: "Metal Processing",
+      desc: "Stress relieving before surface treatment, plating, and coating",
+    },
+    {
+      icon: Plane,
+      title: "Aerospace & Defence",
+      desc: "Controlled atmosphere solution treatment for aerospace alloys",
+    },
+    {
+      icon: Battery,
+      title: "Battery Recycling",
+      desc: "Rotary furnace + APCD for lead battery recycling operations",
+    },
+    {
+      icon: Building2,
+      title: "Heat Treatment Units",
+      desc: "Batch ageing and annealing for contract heat treatment shops",
+    },
+  ].map((item, i) => (
+    <Card
+      key={i}
+      className="rounded-3xl border border-white/10 bg-slate-700 shadow-2xl"
+    >
+      <CardContent className="p-8 space-y-5">
+        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
+          <item.icon className="h-7 w-7 text-primary" strokeWidth={2.2} />
+        </div>
 
-            <h3 className="text-2xl font-bold leading-snug text-white">
-              {item.title}
-            </h3>
+        <h3 className="text-2xl font-bold leading-snug text-white">
+          {item.title}
+        </h3>
 
-            <p className="leading-relaxed text-white/90 italic">
-              {item.desc}
-            </p>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
+        <p className="leading-relaxed text-white/90 italic">
+          {item.desc}
+        </p>
+      </CardContent>
+    </Card>
+  ))}
+</div>
   </div>
 </section>       
         
@@ -835,10 +863,10 @@ export default function LandingPage() {
     <div className="grid grid-cols-1 lg:grid-cols-[48%_52%] gap-14 items-start">
       
       {/* LEFT CONTENT */}
-      <div className="space-y-7 pt-6">
-        <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
+      <div className="space-y-9 pt-6">
+        {/* <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
           Get Your Quote
-        </div>
+        </div> */}
 
         <h2 className="text-3xl md:text-4xl font-bold text-primary leading-tight">
           Get Your Aluminium Furnace Quote Today.
