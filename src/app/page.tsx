@@ -22,12 +22,14 @@ import LeadForm from "@/components/LeadForm"
 import SectionHeader from "@/components/SectionHeader"
 
 const LOGO_URL = "https://res.cloudinary.com/dw9v7jjrq/image/upload/v1779361354/cropped-Continental-Furnaces-Logo_q8ict4.jpg"
-const HERO_BG_URL = "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop"
+const HERO_BG_URL = "https://res.cloudinary.com/dw9v7jjrq/image/upload/v1779528431/WhatsApp_Image_2026-05-23_at_12.09.18_PM_ntnyd3.jpg"
 const DEFAULT_PLACEHOLDER = "https://picsum.photos/seed/furnace/1200/900"
+const Product_1 = "https://res.cloudinary.com/dw9v7jjrq/image/upload/v1779528431/WhatsApp_Image_2026-05-23_at_12.09.18_PM_ntnyd3.jpg"
+const Product_2 = "https://res.cloudinary.com/dw9v7jjrq/image/upload/v1779528435/WhatsApp_Image_2026-05-23_at_12.09.18_PM_1_wcdree.jpg"
 
 export default function LandingPage() {
   const scrollToLeadForm = () => {
-    const candidates = [
+    const candidates = [  
       document.getElementById("top-form-desktop"),
       document.getElementById("top-form-mobile"),
     ].filter(Boolean) as HTMLElement[]
@@ -54,7 +56,7 @@ export default function LandingPage() {
   </div> */}
 
 {/* NAVBAR */}
-<nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-slate-700/95 backdrop-blur-md overflow-x-hidden">
+<nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-white/80 backdrop-blur-md overflow-x-hidden">
   <div className="container mx-auto flex h-16 md:h-24 max-w-7xl items-center justify-between px-4">
     
     {/* LEFT */}
@@ -110,7 +112,7 @@ export default function LandingPage() {
       </div>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/75" />
+     <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/40 to-transparent" />
 
       {/* Grid Overlay */}
       <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.4)_1px,transparent_1px)] bg-[size:60px_60px]" />
@@ -122,7 +124,7 @@ export default function LandingPage() {
 
             {/* Main Heading */}
             <div className="space-y-5">
-              <h1 className="max-w-5xl text-3xl font-bold leading-[1.05] tracking-tight text-white md:text-4xl">
+              <h1 className="max-w-5xl text-3xl font-bold leading-[1.05] tracking-tight text-primary md:text-4xl">
                 Aluminium Processing Furnaces
               </h1>
 
@@ -130,7 +132,7 @@ export default function LandingPage() {
                 Bogie Hearth Oven · Ageing Furnace <br /> · Custom-Built
               </h2>
 
-              <p className="max-w-3xl text-lg leading-relaxed text-white/80">
+              <p className="max-w-3xl text-lg leading-relaxed text-white">
                 ISO-certified aluminium furnaces for annealing, ageing,
                 stress relieving, and precipitation hardening. Electric
                 heating with zero contamination, forced air circulation,
@@ -165,7 +167,7 @@ export default function LandingPage() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="rounded-2xl border border-white/10 bg-card/70 p-5 backdrop-blur-sm"
+                  className="rounded-2xl border border-white/10 bg-card p-5 backdrop-blur-sm"
                 >
                   <div className="flex items-start gap-4">
                     <div className="mt-1 shrink-0">
@@ -205,7 +207,7 @@ export default function LandingPage() {
   {/* Background Image */}
 <div className="absolute inset-0">
   <Image
-    src={DEFAULT_PLACEHOLDER}
+    src={Product_1}
     alt="Industrial aluminium furnace problems"
     fill
     className="object-cover"
@@ -288,7 +290,7 @@ export default function LandingPage() {
         {/* IMAGE */}
         <div className="relative h-72">
           <Image
-            src={DEFAULT_PLACEHOLDER}
+            src={Product_1}
             alt="Bogie Hearth Oven for Aluminium"
             fill
             className="object-cover"
@@ -366,7 +368,7 @@ export default function LandingPage() {
         {/* IMAGE */}
         <div className="relative h-72">
           <Image
-            src={DEFAULT_PLACEHOLDER}
+            src={Product_2}
             alt="Ageing / Precipitation Hardening Furnace"
             fill
             className="object-cover"
