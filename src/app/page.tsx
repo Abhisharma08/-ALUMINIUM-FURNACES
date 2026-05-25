@@ -32,7 +32,7 @@ import LeadForm from "@/components/LeadForm"
 import SectionHeader from "@/components/SectionHeader"
 
 const LOGO_URL = "https://res.cloudinary.com/dw9v7jjrq/image/upload/v1779361354/cropped-Continental-Furnaces-Logo_q8ict4.jpg"
-const HERO_BG_URL = "https://res.cloudinary.com/dw9v7jjrq/image/upload/v1779528431/WhatsApp_Image_2026-05-23_at_12.09.18_PM_ntnyd3.jpg"
+const HERO_BG_URL = "https://res.cloudinary.com/dw9v7jjrq/image/upload/v1779688587/WhatsApp_Image_2026-05-24_at_2.01.46_PM_e3rdsn.jpg"
 const DEFAULT_PLACEHOLDER = "https://picsum.photos/seed/furnace/1200/900"
 const Product_1 = "https://res.cloudinary.com/dw9v7jjrq/image/upload/v1779528431/WhatsApp_Image_2026-05-23_at_12.09.18_PM_ntnyd3.jpg"
 const Product_2 = "https://res.cloudinary.com/dw9v7jjrq/image/upload/v1779528435/WhatsApp_Image_2026-05-23_at_12.09.18_PM_1_wcdree.jpg"
@@ -122,7 +122,7 @@ export default function LandingPage() {
       </div>
 
       {/* Overlay */}
-     <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/40 to-transparent" />
+     <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/65 to-black/30" />
 
       {/* Grid Overlay */}
       <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.4)_1px,transparent_1px)] bg-[size:60px_60px]" />
@@ -225,7 +225,7 @@ export default function LandingPage() {
 </div>
 
 {/* Dark Overlay */}
-<div className="absolute inset-0" />
+<div className="absolute inset-0 bg-black/65" />
   {/* Background Grid */}
   <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.4)_1px,transparent_1px)] bg-[size:60px_60px]" />
 
@@ -282,7 +282,7 @@ export default function LandingPage() {
 </section>       
         
 {/* SECTION 2 — PRODUCTS */}
-<section className="py-20 bg-slate-200 w-full">
+<section className="py-20 bg-white w-full">
   <div className="container mx-auto px-4 max-w-7xl">
     {/* Eyebrow */}
     {/* <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
@@ -456,7 +456,7 @@ export default function LandingPage() {
 
 
 {/* SECTION 3 — KEY FEATURES */}
-<section className="relative overflow-hidden bg-white py-24 w-full">
+<section className="relative overflow-hidden bg-slate-200 py-24 w-full">
   {/* Background Grid */}
   <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.4)_1px,transparent_1px)] bg-[size:60px_60px]" />
 
@@ -529,177 +529,8 @@ export default function LandingPage() {
 </section>
         
         
-        
-{/* <section className="relative overflow-hidden bg-slate-200 py-24 w-full">
-  <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.4)_1px,transparent_1px)] bg-[size:60px_60px]" />
-
-  <div className="container relative z-10 mx-auto max-w-7xl px-4">
-
-    <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
-      Air Pollution Control Device for Rotary Furnace (APCD)
-    </h2>
-
-    <p className="mt-8 max-w-5xl mx-auto text-center text-lg leading-relaxed text-black">
-      For aluminium recycling units using Rotary Furnaces — scrap batteries and lead oxide generate hazardous flue gases and dust. To protect employee health, meet factory environment standards, and comply with regulatory requirements, Continental Furnaces provides complete high-end Air Pollution Control Systems for installation with Rotary Furnaces.
-    </p>
-
-    <div className="mt-16 grid grid-cols-1 gap-7 lg:grid-cols-3">
-      {[
-      {
-        title: "APCD Component 1 — Gravity Chamber",
-        desc: (
-          <>
-            <br />
-            Low pressure drop device that allows large size particles to settle down.
-            Cools down temperature of flue gases. Used as spark arrestor to entrap
-            live or red-hot particles before they enter downstream equipment.
-          </>
-        ),
-      },
-      {
-        title: "APCD Component 2 — Involute Cyclone",
-        desc: (
-          <>
-            <br />
-            Removes medium size particles from flue gas stream. 
-            The treated flue gases are discharged from the top and dust is collected at the bottom — 
-            efficiently reducing particulate load on the bag house filter.
-          </>
-        ),
-      },
-        {
-          title: "APCD Component 3 — Pulse Jet Bag House Filtration",
-          desc: "Final stage filtration system — removes fine particles and brings dust emission below 50 mg/Nm³ discharge requirement. Pulse jet cleaning ensures continuous operation without shutdown for filter cleaning.",
-        },
-      ].map((item, i) => (
-        <Card
-          key={i}
-          className="rounded-3xl border border-white/10 bg-slate-700 shadow-2xl"
-        >
-          <CardContent className="p-8 space-y-5">
-            <div className="h-1.5 w-20 rounded-full bg-primary" />
-
-            <h3 className="text-2xl font-bold leading-snug text-white">
-              {item.title}
-            </h3>
-
-            <p className="leading-relaxed text-white/70 italic">
-              {item.desc}
-            </p>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-
-    <div className="mt-20 grid grid-cols-1 gap-10 lg:grid-cols-2 items-stretch">
-      <div className="overflow-hidden rounded-3xl border border-white/10 h-full flex flex-col">
-        <div className="bg-primary px-6 py-4">
-          <h3 className="text-xl font-bold text-white">
-            Pollution Characteristics — Rotary Furnace (Inlet)
-          </h3>
-        </div>
-
-        <table className="w-full text-left text-sm bg-slate-600 flex-1">
-          <tbody>
-            {[
-              ["Dust Load", "8,000 – 15,000 mg/Nm³"],
-              ["Temperature", "100 – 120°C"],
-              ["Gases Present", "Traces of NOx and SO"],
-            ].map((row, i) => (
-              <tr
-                key={i}
-                className="border-b border-white/10 last:border-none"
-              >
-                <td className="p-5 font-semibold text-secondary bg-black/20 w-1/2">
-                  {row[0]}
-                </td>
-
-                <td className="p-5 text-white">
-                  {row[1]}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="overflow-hidden rounded-3xl border border-white/10">
-        <div className="bg-primary px-6 py-4">
-          <h3 className="text-xl font-bold text-white">
-            Discharge Requirements — As Per Norms (Outlet)
-          </h3>
-        </div>
-
-        <table className="w-full text-left text-sm bg-slate-700 flex-1">
-          <tbody>
-            {[
-              ["Dust", "Less than 50 mg/Nm³"],
-              ["Lead (Pb)", "Less than 10 mg/Nm³"],
-              ["Outlet Temperature", "60 – 90°C"],
-              ["Gases", "Traces of NOx and SO2"],
-            ].map((row, i) => (
-              <tr
-                key={i}
-                className="border-b border-white/10 last:border-none"
-              >
-                <td className="p-5 font-semibold text-secondary bg-black/20 w-1/2">
-                  {row[0]}
-                </td>
-
-                <td className="p-5 text-white">
-                  {row[1]}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div className="mt-20 overflow-hidden rounded-3xl border border-white/10 h-full flex flex-col">
-      <div className="bg-primary px-6 py-4">
-        <h3 className="text-xl font-bold text-white">
-          4-Stage APCD System
-        </h3>
-      </div>
-
-      <table className="w-full text-left text-sm bg-slate-700 flex-1">
-        <tbody>
-          {[
-            ["Stage 1", "Rotary Chamber"],
-            ["Stage 2", "Gravity Chamber"],
-            ["Stage 3", "Involute Cyclone"],
-            ["Stage 4", "Pulse Jet Bag House Filtration System"],
-          ].map((row, i) => (
-            <tr
-              key={i}
-              className="border-b border-white/10 last:border-none"
-            >
-              <td className="p-5 font-semibold text-secondary bg-black/20 w-1/3">
-                {row[0]}
-              </td>
-
-              <td className="p-5 text-white">
-                {row[1]}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-
-    <div className="mt-16 rounded-3xl border border-green-500/30 bg-green-600/40 p-8">
-      <p className="text-lg leading-relaxed text-black">
-        ✅ Regulatory Compliance: The complete 4-stage APCD system brings your rotary furnace emissions within statutory norms — protecting employee health, meeting PCB/CPCB requirements, and eliminating risk of factory closure, fines, or production stoppages due to pollution violations.
-      </p>
-    </div>
-  </div>
-</section> */}
-
-
-
 {/* SECTION 7 — INDUSTRIES SERVED */}
-<section className="relative overflow-hidden bg-slate-200 py-24 w-full">
+<section className="relative overflow-hidden bg-white py-24 w-full">
   {/* Background Grid */}
   <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.4)_1px,transparent_1px)] bg-[size:60px_60px]" />
 
@@ -781,79 +612,7 @@ export default function LandingPage() {
   </div>
 </section>       
         
-{/* SECTION 8 — TRUST & CREDENTIALS */}
-<section className="py-24 bg-white w-full">
-  <div className="container mx-auto px-4 max-w-7xl">
-    {/* Eyebrow */}
-    {/* <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
-      Trust & Credentials
-    </div> */}
-
-    {/* Heading */}
-    <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
-      Trusted Industrial Furnace Manufacturer Since 1987
-    </h2>
-
-    {/* STATS */}
-    <div className="mt-14 grid grid-cols-2 gap-5 lg:grid-cols-5">
-      {[
-        {
-          stat: "35+",
-          label: "Years in Operation",
-        },
-        {
-          stat: "1987",
-          label: "Established — Faridabad",
-        },
-        {
-          stat: "15+",
-          label: "Product Lines",
-        },
-        {
-          stat: "ISO 9001 & 14001",
-          label: "Certification",
-        },
-        {
-          stat: "Pan-India",
-          label: "Coverage",
-        },
-      ].map((item, i) => (
-        <Card
-          key={i}
-          className="rounded-3xl border border-slate-200 bg-slate-700 shadow-xl"
-        >
-          <CardContent className="p-5 text-center space-y-2">
-            <h3 className="text-2xl font-bold text-primary leading-none">
-              {item.stat}
-            </h3>
-
-            <p className="text-sm text-white/90 leading-relaxed">
-              {item.label}
-            </p>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-
-    {/* CERTIFICATION BADGES */}
-    <div className="mt-12 flex flex-wrap justify-center gap-3">
-      {[
-        "ISO 9001:2015 — Quality Management",
-        "ISO 14001:2015 — Environmental Management",
-        "SINCE 1987 — 35+ Years Excellence",
-        "APCD SYSTEMS — Pollution Control Compliant",
-      ].map((item, i) => (
-        <div
-          key={i}
-          className="rounded-full border border-primary/20 bg-primary/20 px-4 py-2 text-xs font-semibold text-primary whitespace-nowrap"
-        >
-          {item}
-        </div>
-      ))}
-    </div>
-  </div>
-</section>              
-        {/* V2 changes SECTION */}
+{/*         {/* V2 changes SECTION */}
 
 {/* FINAL CTA */}
 <section className="py-24 bg-slate-200 relative overflow-hidden w-full">
@@ -889,23 +648,6 @@ export default function LandingPage() {
       <div className="w-full">
         <LeadForm />
       </div>
-    </div>
-
-    {/* CONTACT BLOCK */}
-    <div className="mt-20 rounded-3xl border border-slate-300 bg-white p-8 md:p-10 text-center shadow-xl">
-      <h3 className="text-2xl font-bold text-primary">
-        Continental Furnaces
-      </h3>
-
-      <p className="mt-5 text-base md:text-lg leading-relaxed text-slate-700 max-w-3xl mx-auto">
-        Plot No. 34, New DLF Industrial Area,
-        Faridabad, Haryana, India
-        <br />
-        <br />
-        📧 info@confur.net | confur.india@gmail.com
-        <br />
-        🌐 www.confur.net
-      </p>
     </div>
   </div>
 </section>
