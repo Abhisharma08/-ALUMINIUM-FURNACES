@@ -69,28 +69,15 @@ f.parentNode.insertBefore(j,f);
         />
 
         {/* Google Ads */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=AW-18038800208"
-          strategy="afterInteractive"
-        />
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18188170368"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-        <Script
-          id="google-ads-gtag"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-window.dataLayer = window.dataLayer || [];
-
-function gtag(){
-  dataLayer.push(arguments);
-}
-
-gtag('js', new Date());
-
-gtag('config', 'AW-18038800208');
-            `,
-          }}
-        />
+  gtag('config', 'AW-18188170368');
+</script>
       </head>
 
       <body
