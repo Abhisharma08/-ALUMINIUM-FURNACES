@@ -69,7 +69,6 @@ f.parentNode.insertBefore(j,f);
         />
 
         {/* Google Ads */}
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18188170368"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
