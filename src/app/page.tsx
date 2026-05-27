@@ -138,9 +138,9 @@ export default function LandingPage() {
                 Aluminium Recycling & Processing Furnaces 
               </h1>
 
-              <h2 className="max-w-5xl text-2xl font-bold leading-[1.05] tracking-tight text-primary md:text-3xl">
+              {/* <h2 className="max-w-5xl text-2xl font-bold leading-[1.05] tracking-tight text-primary md:text-3xl">
                 Bogie Hearth Oven · Ageing Furnace <br /> · Custom-Built
-              </h2>
+              </h2> */}
 
               <p className="max-w-3xl text-lg leading-relaxed text-white">
                 ISO-certified aluminium furnaces for annealing, ageing,
