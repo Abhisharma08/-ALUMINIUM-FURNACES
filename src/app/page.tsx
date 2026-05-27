@@ -87,13 +87,13 @@ export default function LandingPage() {
 
     {/* RIGHT */}
     <div className="hidden lg:flex items-center gap-5">
-      <div className="text-right">
+      {/* <div className="text-right">
 
-        <p className="text-xs text-white/60">
+        <p className="text-xs text-secondary">
           ISO 9001:2015 &
           <br />ISO 14001:2015 Certified
         </p>
-      </div>
+      </div> */}
 
       <Button
         className="bg-primary hover:bg-primary/90 text-white font-bold px-7 h-12 rounded-xl"
@@ -135,10 +135,10 @@ export default function LandingPage() {
             {/* Main Heading */}
             <div className="space-y-5">
               <h1 className="max-w-5xl text-3xl font-bold leading-[1.05] tracking-tight text-primary md:text-4xl">
-                Aluminium Processing Furnaces
+                Aluminium Recycling & Processing Furnaces 
               </h1>
 
-              <h2 className="max-w-4xl text-2xl font-semibold leading-relaxed text-secondary md:text-2xl">
+              <h2 className="max-w-5xl text-2xl font-bold leading-[1.05] tracking-tight text-primary md:text-3xl">
                 Bogie Hearth Oven · Ageing Furnace <br /> · Custom-Built
               </h2>
 
@@ -282,178 +282,106 @@ export default function LandingPage() {
 </section>       
         
 {/* SECTION 2 — PRODUCTS */}
-<section className="py-20 bg-white w-full">
+<section className="py-24 bg-white w-full">
   <div className="container mx-auto px-4 max-w-7xl">
-    {/* Eyebrow */}
-    {/* <div className="mb-5 mx-auto flex w-fit rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
-      Our Products
-    </div> */}
 
-    {/* Heading */}
+    {/* HEADING */}
     <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
-      Two Precision Aluminium Furnaces — One Trusted Manufacturer
+      Industrial Aluminium Furnaces Built for Every Critical Process
     </h2>
 
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-14">
-      {/* PRODUCT 1 */}
-      <Card className="rounded-3xl overflow-hidden border border-slate-200  shadow-xl">
-        {/* IMAGE */}
-        <div className="relative h-72">
-          <Image
-            src={Product_1}
-            alt="Bogie Hearth Oven for Aluminium"
-            fill
-            className="object-cover"
-          />
-        </div>
+    {/* PRODUCT GRID */}
+    <div className="mt-16 grid grid-cols-1 gap-7 md:grid-cols-2 xl:grid-cols-3">
 
-        {/* CONTENT */}
-        <CardContent className="p-8 space-y-6 bg-slate-800">
-          {/* TAG */}
-          <div className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white">
-            Product 01 · Aluminium Annealing
-          </div>
+      {[
+      {
+        number: "01",
+        title: "Rotary Aluminum Melting Furnace",
+        subtitle: "Efficient Scrap Melting & Uniform Heat Distribution",
+        desc: "Dual-fuel burners — Oil & Gas compatible. Rotary action ensures uniform heat distribution with high thermal efficiency and low emissions compliant with environmental standards.",
+      },
+      {
+        number: "02",
+        title: "Stationary Type Aluminium Melting Furnace",
+        subtitle: "Heavy-Duty Continuous Production Furnace",
+        desc: "Fixed design for stable high-volume operations. Available from 500 kg to 30+ Tons with multiple discharge configurations and low maintenance requirements.",
+      },
+      {
+        number: "03",
+        title: "Tilting Type Melting Furnace",
+        subtitle: "Controlled Hydraulic Pouring System",
+        desc: "Hydraulic tilting enables precise pouring with 6000 kg bath capacity and 1500 kg/hr melting rate. LPG fired with operating temperatures up to 1000°C.",
+      },
+      {
+        number: "04",
+        title: "Aluminium Melting / Holding Furnace",
+        subtitle: "Integrated Continuous Production System",
+        desc: "Integrated melting + holding furnace for continuous operations. Supports LDO, FO, Producer Gas, and Natural Gas with optimised temperature management.",
+      },
+      {
+        number: "05",
+        title: "Tower Type Aluminium Melting Furnace",
+        subtitle: "Vertical High-Efficiency Melting Design",
+        desc: "Vertical configuration minimises floor space while enabling faster melting through vertical heat flow. Reduced oxidation lowers operating cost significantly.",
+      },
+      {
+        number: "06",
+        title: "Crucible Type Holding Furnace",
+        subtitle: "Precision Electric Temperature Control",
+        desc: "Electric heating system with ±5°C precision control. Minimises dross formation and integrates seamlessly with die casting machines.",
+      },
 
-          {/* TITLE */}
-          <div>
-            <h3 className="text-3xl font-bold text-primary leading-tight">
-              Bogie Hearth Oven for Aluminium
-            </h3>
+      {
+        number: "07",
+        title: "Skelner Furnace",
+        subtitle: "Continuous Die Casting & Holding Operations",
+        desc: "Luminous flame burners + electric heaters in holding furnace. 50°C holding buffer eliminates hard oxidation. Available from 300 kg to 30 Tons.",
+      },
+      ].map((item, i) => (
+        <Card
+          key={i}
+          className="rounded-3xl border border-slate-200 bg-slate-700 shadow-xl"
+        >
+          <CardContent className="p-8 space-y-6">
 
-            <p className="mt-3 text-secondary font-semibold text-lg">
-              Annealing · Ageing · Stress Relieving — Zero Contamination
+            {/* PRODUCT NUMBER */}
+            <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-bold text-primary">
+              Product {item.number}
+            </div>
+
+            {/* TITLE */}
+            <div className="space-y-3">
+              <h3 className="text-2xl font-bold leading-tight text-primary">
+                {item.title}
+              </h3>
+
+              <p className="text-secondary font-semibold text-lg">
+                {item.subtitle}
+              </p>
+            </div>
+
+            {/* DESCRIPTION */}
+            <p className="text-white leading-relaxed italic">
+              {item.desc}
             </p>
-          </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
 
-          {/* DESCRIPTION */}
-          <p className="text-white/90 leading-relaxed text-base italic">
-            Optimised for aluminium annealing, ageing, and stress relieving.
-            Electric heating ensures clean, uniform heat distribution with no
-            gas contamination — critical for high-purity aluminium processing
-            in cable, automotive, and non-ferrous wire industries.
-          </p>
-
-          {/* TABLE */}
-          <div className="overflow-hidden rounded-2xl border border-slate-200">
-            <table className="w-full text-left text-sm bg-slate-600">
-              <tbody>
-                {[
-                  ["Temperature Range", "250°C – 600°C"],
-                  ["Heating Mode", "Electric (Gas/Oil optional)"],
-                  ["Circulation", "Forced Air — uniform heat"],
-                  ["Controls", "PLC/HMI + Data Logging"],
-                  ["Capacity", "Hundreds of kg to several tonnes"],
-                ].map((row, i) => (
-                  <tr
-                    key={i}
-                    className="border-b border-slate-200 last:border-none"
-                  >
-                    <td className="p-4 font-semibold text-white bg-slate-700 w-1/2">
-                      {row[0]}
-                    </td>
-
-                    <td className="p-4 text-white">
-                      {row[1]}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* CTA */}
-          <Button
-            className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-12"
-            onClick={() => {
-              scrollToLeadForm()
-            }}
-          >
-            GET QUOTE FOR BOGIE HEARTH OVEN →
-          </Button>
-        </CardContent>
-      </Card>
-
-      {/* PRODUCT 2 */}
-      <Card className="rounded-3xl overflow-hidden border border-slate-200 shadow-xl">
-        {/* IMAGE */}
-        <div className="relative h-72">
-          <Image
-            src={Product_2}
-            alt="Ageing / Precipitation Hardening Furnace"
-            fill
-            className="object-cover"
-          />
-        </div>
-
-        {/* CONTENT */}
-        <CardContent className="p-8 space-y-6 bg-slate-800">
-          {/* TAG */}
-          <div className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white">
-            Product 02 · Precipitation Hardening
-          </div>
-
-          {/* TITLE */}
-          <div>
-            <h3 className="text-3xl font-bold text-primary leading-tight">
-              Ageing / Precipitation Hardening Furnace
-            </h3>
-
-            <p className="mt-3 text-secondary font-semibold text-lg">
-              Strength · Hardness · Fatigue Performance of Aluminium Alloys
-            </p>
-          </div>
-
-          {/* DESCRIPTION */}
-          <p className="text-white/90 leading-relaxed text-base italic">
-            Thermal treatment that enhances strength, hardness, and fatigue
-            performance of aluminium alloys through controlled precipitation —
-            critical for automotive die castings, aerospace components, and
-            high-grade electrical conductor manufacturing.
-          </p>
-
-          {/* TABLE */}
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-600">
-            <table className="w-full text-left text-sm bg-slate-600">
-              <tbody>
-                {[
-                  ["Temperature Range", "95°C – 205°C (ageing)"],
-                  ["Cycle Duration", "4 – 24 Hours"],
-                  ["Heating Mode", "Gas / Oil / Electrical"],
-                  ["Controls", "PLC with Data Logging"],
-                  ["Cooling", "Forced Air or Water Quenching"],
-                ].map((row, i) => (
-                  <tr
-                    key={i}
-                    className="border-b border-slate-200 last:border-none"
-                  >
-                    <td className="p-4 font-semibold text-white bg-slate-700 w-1/2">
-                      {row[0]}
-                    </td>
-
-                    <td className="p-4 text-white">
-                      {row[1]}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* CTA */}
-          <Button
-            className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-12"
-            onClick={() => {
-              scrollToLeadForm()
-            }}
-          >
-            GET QUOTE FOR AGEING FURNACE →
-          </Button>
-        </CardContent>
-      </Card>
+    {/* BOTTOM CTA */}
+    <div className="mt-16 flex justify-center">
+      <Button
+        className="bg-primary hover:bg-primary/90 text-white font-bold px-10 h-14 rounded-xl text-base"
+        onClick={() => {
+          scrollToLeadForm()
+        }}
+      >
+        GET FREE QUOTE →
+      </Button>
     </div>
   </div>
-</section>        
-
+</section>
 
 {/* SECTION 3 — KEY FEATURES */}
 <section className="relative overflow-hidden bg-slate-200 py-24 w-full">
